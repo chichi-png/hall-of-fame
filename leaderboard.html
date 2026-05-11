@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Affiliate Leaderboard — Altcoinist</title>
+<title>Top Callers — Altcoinist</title>
 <link rel="stylesheet" href="styles/groupbot.css">
 <style>
 /* ==== TWEAK-DRIVEN OVERRIDES ==== */
@@ -25,6 +25,39 @@ body[data-density="spacious"] td { padding: 1.35rem 1.75rem; font-size: 1rem; }
 body[data-density="spacious"] th { padding: 1.35rem 1.75rem; }
 
 body[data-anim="off"] * { animation: none !important; transition: none !important; }
+
+/* nav CTA button */
+.nav-cta {
+  display: inline-flex; align-items: center;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-mono, monospace); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+  color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.4);
+  border-radius: var(--radius-full, 999px);
+  text-decoration: none; white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+.nav-cta:hover { background: rgba(var(--accent-rgb),0.08); border-color: rgba(var(--accent-rgb),0.7); }
+
+/* card CTAs */
+.card-actions {
+  display: flex; gap: 0.5rem;
+  margin-top: 0.75rem; padding-top: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.card-cta {
+  flex: 1; text-align: center;
+  font-size: 0.7rem !important; padding: 0.4rem 0.6rem !important;
+  white-space: nowrap;
+}
+.card-share {
+  font-size: 0.7rem !important; padding: 0.4rem 0.6rem !important;
+  white-space: nowrap; flex-shrink: 0;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-full, 999px); color: rgba(255,255,255,0.45);
+  cursor: pointer; font-family: var(--font-mono, monospace); letter-spacing: 0.04em;
+  transition: all 0.2s;
+}
+.card-share:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); }
 
 /* card shapes */
 body[data-card="flat"] .affiliate-card,
@@ -1008,6 +1041,7 @@ body { -webkit-text-size-adjust: 100%; }
       <li><a href="#" class="nav-link" data-page="wins" onclick="switchPage('wins'); return false;">Highlights</a></li>
       <li><a href="#" class="nav-link" data-page="directory" onclick="switchPage('directory'); return false;">Directory</a></li>
     </ul>
+    <a href="https://t.me/altcoinist_bot" target="_blank" class="nav-cta">Get Ranked &rarr;</a>
   </div>
 </nav>
 
@@ -1015,10 +1049,10 @@ body { -webkit-text-size-adjust: 100%; }
 <div id="home-page" class="page active" data-screen-label="Home">
   <section class="section">
     <div class="container text-center">
-      <span class="eyebrow">01 / top performers</span>
-      <h1 class="gradient-heading">Affiliate Leaderboard</h1>
+      <span class="eyebrow">01 / top callers</span>
+      <h1 class="gradient-heading">Hall of Fame</h1>
       <p class="mt-2" style="color: var(--text-secondary); max-width: 520px; margin-left: auto; margin-right: auto;">
-        The top performers in the Altcoinist signal network. Compete for the top spot and earn rewards.
+        The best crypto callers on Altcoinist. Ranked by signal quality, trading activity, and community reach.
       </p>
     </div>
 
@@ -1031,8 +1065,8 @@ body { -webkit-text-size-adjust: 100%; }
     <div class="tier-summary" id="tier-summary"></div>
 
     <div class="text-center mt-4" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center;">
-      <a href="https://altcoinist.notion.site/2a9b35d78748801c856dc1c9ebef6815?pvs=105" target="_blank" class="btn btn-primary">
-        <span>Become an Affiliate</span>
+      <a href="https://t.me/altcoinist_bot" target="_blank" class="btn btn-primary">
+        <span>Start Calling — Get Ranked</span>
         <span class="btn-arrow" aria-hidden="true">&rarr;</span>
       </a>
       <button class="btn btn-secondary" onclick="switchPage('alltime'); return false;">
@@ -1343,6 +1377,7 @@ async function loadData() {
     renderMonthlyGrid();
     renderWins();
     renderDirectoryGrid();
+    maybeOpenCallerFromUrl();
   } catch (e) {
     console.error('Failed to load', e);
     document.getElementById('home-page').innerHTML = `<div class="empty-msg">Failed to load leaderboard data.</div>`;
@@ -1505,6 +1540,10 @@ function cardHtml(a, src) {
           <span class="monthly-total-val">${fmtScore(a.total)}</span>
           <span class="monthly-total-label">Total</span>
         </div>
+      </div>
+      <div class="card-actions" onclick="event.stopPropagation()">
+        <a href="https://t.me/altcoinist_bot" target="_blank" class="btn btn-secondary card-cta">Follow on Altcoinist &rarr;</a>
+        <button class="card-share" onclick="shareCallerUrl('${a.handle.replace('@','')}')" title="Copy shareable link">Share</button>
       </div>`;
   }
 
@@ -1527,6 +1566,10 @@ function cardHtml(a, src) {
           <label>TOTAL SCORE</label>
           <span class="value">${fmtScore(a.total)}</span>
         </div>
+      </div>
+      <div class="card-actions" onclick="event.stopPropagation()">
+        <a href="https://t.me/altcoinist_bot" target="_blank" class="btn btn-secondary card-cta">Follow on Altcoinist &rarr;</a>
+        <button class="card-share" onclick="shareCallerUrl('${a.handle.replace('@','')}')" title="Copy shareable link">Share</button>
       </div>
     </div>`;
 }
@@ -1788,14 +1831,49 @@ function openAffiliateModal(rank, src) {
       <div class="stat-card"><div class="stat-value">${fmtScore(a.tweetScore)}</div><div class="stat-label">Tweet Score</div></div>
       <div class="stat-card"><div class="stat-value">${fmtScore(a.botActivityScore)}</div><div class="stat-label">Bot Activity</div></div>
     </div>
-    ${a.xUrl && a.xUrl.startsWith('http') ? `<div style="text-align:center;margin-top:1.5rem;">
-      <a href="${a.xUrl}" target="_blank" class="btn btn-secondary">View on X →</a>
-    </div>`:''}
+    <div style="text-align:center;margin-top:1.5rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://t.me/altcoinist_bot" target="_blank" class="btn btn-primary">Follow on Altcoinist &rarr;</a>
+      ${a.xUrl && a.xUrl.startsWith('http') ? `<a href="${a.xUrl}" target="_blank" class="btn btn-secondary">View on X</a>` : ''}
+      <button class="btn btn-secondary" onclick="shareCallerUrl('${(a.handle||'').replace('@','')}')">Copy link</button>
+    </div>
   `;
   document.getElementById('affiliate-modal').classList.add('active');
 }
 function closeModal() { document.getElementById('affiliate-modal').classList.remove('active'); }
 function closeModalOnBackdrop(e) { if (e.target === document.getElementById('affiliate-modal')) closeModal(); }
+
+// --------- Shareable caller links ----------
+function shareCallerUrl(handle) {
+  const url = `${location.origin}${location.pathname}?caller=${encodeURIComponent(handle)}`;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => showToast('Link copied!')).catch(() => fallbackCopy(url));
+  } else {
+    fallbackCopy(url);
+  }
+}
+function fallbackCopy(url) {
+  const el = document.createElement('textarea');
+  el.value = url; el.style.position = 'fixed'; el.style.opacity = '0';
+  document.body.appendChild(el); el.select();
+  try { document.execCommand('copy'); showToast('Link copied!'); } catch { showToast(url); }
+  document.body.removeChild(el);
+}
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:rgba(56,255,147,0.12);color:#38FF93;border:1px solid rgba(56,255,147,0.3);padding:0.5rem 1.25rem;border-radius:999px;font-size:0.8125rem;z-index:9999;pointer-events:none;';
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2200);
+}
+
+// Auto-open caller modal from ?caller= URL param
+function maybeOpenCallerFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const handle = params.get('caller');
+  if (!handle || !affiliatesData.length) return;
+  const a = affiliatesData.find(x => x.handle.replace('@','').toLowerCase() === handle.toLowerCase());
+  if (a) openAffiliateModal(a.rank, 'alltime');
+}
 
 // ====================== TWEAKS ======================
 const ACCENT_SWATCHES = [
