@@ -5,24 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Top Callers — Altcoinist</title>
 <link rel="stylesheet" href="styles/groupbot.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ==== REGISTRY REDESIGN ==== */
 :root {
   --accent: #38FF93;
   --accent-rgb: 56, 255, 147;
-  --bg: #060606;
-  --font-heading: 'Barlow Condensed', sans-serif;
-  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-}
-body {
-  background: var(--bg) !important;
-  background-image: radial-gradient(ellipse 120% 55% at 50% -8%, rgba(56,255,147,0.055) 0%, transparent 60%) !important;
-  background-attachment: fixed !important;
-}
+  --bg: #000000;
   --card-bg: rgba(8, 8, 8, 0.85);
   /* Tiers desaturated to keep palette minimal — brand green is the only color */
   --tier-diamond: rgba(255,255,255,0.95);
@@ -1106,12 +1094,10 @@ body { -webkit-text-size-adjust: 100%; }
   background: var(--accent);
   box-shadow: 0 0 6px var(--accent);
   display: inline-block;
-  animation: pulse-dot 2s ease-in-out infinite;
 }
-@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
 .rl-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--font-heading);
   font-size: clamp(3.5rem, 10vw, 7rem);
   font-weight: 900; font-style: italic;
   letter-spacing: -0.01em; line-height: 0.92;
@@ -1146,7 +1132,7 @@ body { -webkit-text-size-adjust: 100%; }
 .rl-card-hero .ghost-rank {
   position: absolute; right: -0.5rem; top: 50%;
   transform: translateY(-50%);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--font-heading);
   font-size: clamp(8rem, 20vw, 13rem);
   font-weight: 900; font-style: italic;
   line-height: 1; letter-spacing: -0.04em;
@@ -1155,7 +1141,7 @@ body { -webkit-text-size-adjust: 100%; }
 }
 
 .rl-rank-num {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 900; font-style: italic;
   line-height: 1; letter-spacing: -0.02em;
 }
@@ -1173,7 +1159,7 @@ body { -webkit-text-size-adjust: 100%; }
 }
 .rl-caller-text { min-width: 0; }
 .rl-caller-name {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.75rem; font-weight: 700;
   color: #fff; line-height: 1;
   text-transform: uppercase; letter-spacing: 0.02em;
@@ -1186,7 +1172,7 @@ body { -webkit-text-size-adjust: 100%; }
 }
 .rl-caller-score-col { text-align: right; flex-shrink: 0; }
 .rl-caller-score {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--font-heading);
   font-size: clamp(2.25rem, 6vw, 3.5rem);
   font-weight: 900; font-style: italic;
   color: var(--accent); line-height: 1; letter-spacing: -0.02em;
@@ -1227,7 +1213,7 @@ body { -webkit-text-size-adjust: 100%; }
 .rl-card-sub .ghost-rank {
   position: absolute; right: -0.25rem; top: 50%;
   transform: translateY(-50%);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--font-heading);
   font-size: 7rem; font-weight: 900; font-style: italic;
   line-height: 1; letter-spacing: -0.04em;
   color: rgba(255,255,255,0.04);
@@ -1255,7 +1241,7 @@ body { -webkit-text-size-adjust: 100%; }
 
 /* All-time table: rank as architectural number + tier left-border */
 .tier-rank-large {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.625rem; font-weight: 900;
   color: rgba(255,255,255,0.16); letter-spacing: -0.02em;
   line-height: 1;
@@ -1270,21 +1256,20 @@ tr[data-tier] td:first-child::before {
   width: 2px; border-radius: 1px;
 }
 tr[data-tier="diamond"] td:first-child::before { background: rgba(56,255,147,0.6); }
-tr[data-tier="gold"]    td:first-child::before { background: rgba(255,215,80,0.5); }
-tr[data-tier="silver"]  td:first-child::before { background: rgba(200,200,210,0.4); }
-tr[data-tier="bronze"]  td:first-child::before { background: rgba(195,130,60,0.4); }
-tr[data-tier="base"]    td:first-child::before { background: rgba(255,255,255,0.12); }
+tr[data-tier="gold"]    td:first-child::before { background: rgba(56,255,147,0.35); }
+tr[data-tier="silver"]  td:first-child::before { background: rgba(56,255,147,0.18); }
+tr[data-tier="bronze"]  td:first-child::before { background: rgba(255,255,255,0.18); }
+tr[data-tier="base"]    td:first-child::before { background: rgba(255,255,255,0.07); }
 
-/* Section headings — Barlow Condensed */
+/* Section headings */
 .gradient-heading {
-  font-family: 'Barlow Condensed', sans-serif !important;
-  font-weight: 900 !important; font-style: italic;
-  letter-spacing: -0.01em !important;
-  text-transform: uppercase;
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
 }
 .eyebrow {
   font-family: var(--font-mono) !important;
-  letter-spacing: 0.22em !important;
+  letter-spacing: 0.18em !important;
 }
 
 /* ===== HOME HERO STATS STRIP ===== */
@@ -2286,7 +2271,7 @@ function shareCallerCard(rank, src) {
     // Tier
     const tKey = (a.tier && a.tier.key) || 'base';
     const tLbl = (a.tier && a.tier.label) || 'Base';
-    const tC = { diamond:'rgba(255,255,255,0.88)', gold:'rgba(255,215,100,0.8)', silver:'rgba(192,200,210,0.8)', bronze:'rgba(200,130,80,0.75)', base:'rgba(255,255,255,0.32)' };
+    const tC = { diamond:'rgba(56,255,147,0.95)', gold:'rgba(56,255,147,0.7)', silver:'rgba(56,255,147,0.45)', bronze:'rgba(255,255,255,0.5)', base:'rgba(255,255,255,0.28)' };
     ctx.fillStyle = tC[tKey] || 'rgba(255,255,255,0.45)';
     ctx.font = '500 15px "JetBrains Mono","Courier New",monospace';
     ctx.fillText(tLbl.toUpperCase() + '  TIER', 60, 265);
