@@ -6,7 +6,7 @@
 <title>Top Callers — Altcoinist</title>
 <link rel="stylesheet" href="styles/groupbot.css">
 <style>
-/* ==== REGISTRY REDESIGN ==== */
+/* ==== TWEAK-DRIVEN OVERRIDES ==== */
 :root {
   --accent: #38FF93;
   --accent-rgb: 56, 255, 147;
@@ -1078,200 +1078,6 @@ body { -webkit-text-size-adjust: 100%; }
 }
 .btn-share:hover { background: rgba(var(--accent-rgb), 0.15); border-color: rgba(var(--accent-rgb), 0.6); }
 
-/* ===== REGISTRY HOME ===== */
-.rl-masthead {
-  padding: 5rem 2rem 0;
-  text-align: center;
-}
-.rl-masthead-meta {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--text-muted); margin-bottom: 1.25rem;
-  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-}
-.rl-masthead-meta .live-dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 6px var(--accent);
-  display: inline-block;
-}
-
-.rl-title {
-  font-family: var(--font-heading);
-  font-size: clamp(3.5rem, 10vw, 7rem);
-  font-weight: 900; font-style: italic;
-  letter-spacing: -0.01em; line-height: 0.92;
-  color: #fff; text-transform: uppercase; margin: 0;
-}
-.rl-title-accent { color: var(--accent); }
-
-.rl-featured {
-  max-width: 920px; margin: 3rem auto 0;
-  padding: 0 1.5rem;
-  display: flex; flex-direction: column; gap: 0.75rem;
-}
-
-/* Hero card — #1 caller */
-.rl-card-hero {
-  position: relative; overflow: hidden;
-  background: rgba(56,255,147,0.03);
-  border: 1px solid rgba(56,255,147,0.18);
-  border-radius: 14px;
-  padding: 2rem 2.5rem;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center; gap: 2rem;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-}
-.rl-card-hero:hover {
-  border-color: rgba(56,255,147,0.4);
-  background: rgba(56,255,147,0.055);
-  box-shadow: 0 0 60px rgba(56,255,147,0.07), inset 0 1px 0 rgba(56,255,147,0.1);
-}
-.rl-card-hero .ghost-rank {
-  position: absolute; right: -0.5rem; top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-heading);
-  font-size: clamp(8rem, 20vw, 13rem);
-  font-weight: 900; font-style: italic;
-  line-height: 1; letter-spacing: -0.04em;
-  color: rgba(56,255,147,0.06);
-  pointer-events: none; user-select: none;
-}
-
-.rl-rank-num {
-  font-family: var(--font-heading);
-  font-weight: 900; font-style: italic;
-  line-height: 1; letter-spacing: -0.02em;
-}
-.rl-card-hero .rl-rank-num {
-  font-size: clamp(3.5rem, 8vw, 5.5rem);
-  color: var(--accent);
-}
-
-.rl-caller-info { display: flex; align-items: center; gap: 1.25rem; min-width: 0; }
-.rl-caller-avatar {
-  width: 76px; height: 76px; border-radius: 50%;
-  border: 2px solid rgba(56,255,147,0.35);
-  object-fit: cover; flex-shrink: 0;
-  box-shadow: 0 0 28px rgba(56,255,147,0.18);
-}
-.rl-caller-text { min-width: 0; }
-.rl-caller-name {
-  font-family: var(--font-heading);
-  font-size: 1.75rem; font-weight: 700;
-  color: #fff; line-height: 1;
-  text-transform: uppercase; letter-spacing: 0.02em;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.rl-caller-handle {
-  font-family: var(--font-mono);
-  font-size: 0.75rem; color: var(--text-secondary);
-  margin-top: 0.3rem;
-}
-.rl-caller-score-col { text-align: right; flex-shrink: 0; }
-.rl-caller-score {
-  font-family: var(--font-heading);
-  font-size: clamp(2.25rem, 6vw, 3.5rem);
-  font-weight: 900; font-style: italic;
-  color: var(--accent); line-height: 1; letter-spacing: -0.02em;
-  display: block;
-}
-.rl-caller-score-label {
-  font-family: var(--font-mono); font-size: 9px;
-  text-transform: uppercase; letter-spacing: 0.18em;
-  color: var(--text-muted); margin-top: 0.3rem;
-  display: block;
-}
-.rl-share-btn {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  margin-top: 0.75rem; padding: 0.4rem 1rem;
-  font-family: var(--font-mono); font-size: 0.6875rem;
-  font-weight: 600; letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent); background: rgba(56,255,147,0.07);
-  border: 1px solid rgba(56,255,147,0.3);
-  border-radius: 999px; cursor: pointer;
-  transition: all 0.2s;
-}
-.rl-share-btn:hover { background: rgba(56,255,147,0.14); border-color: rgba(56,255,147,0.6); }
-
-/* Sub-row: #2 + #3 */
-.rl-sub-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-.rl-card-sub {
-  position: relative; overflow: hidden;
-  background: rgba(255,255,255,0.018);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  display: flex; align-items: center; gap: 1rem;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
-.rl-card-sub:hover { border-color: rgba(255,255,255,0.14); background: rgba(255,255,255,0.028); }
-.rl-card-sub .ghost-rank {
-  position: absolute; right: -0.25rem; top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-heading);
-  font-size: 7rem; font-weight: 900; font-style: italic;
-  line-height: 1; letter-spacing: -0.04em;
-  color: rgba(255,255,255,0.04);
-  pointer-events: none; user-select: none;
-}
-.rl-card-sub .rl-rank-num { font-size: 2.25rem; color: rgba(255,255,255,0.3); flex-shrink: 0; }
-.rl-card-sub .rl-caller-avatar {
-  width: 52px; height: 52px;
-  border: 1.5px solid rgba(255,255,255,0.1);
-  box-shadow: none;
-}
-.rl-card-sub .rl-caller-name { font-size: 1.1rem; }
-.rl-card-sub .rl-caller-score {
-  font-size: 1.625rem; color: rgba(255,255,255,0.65);
-  font-style: normal;
-}
-.rl-card-sub .rl-caller-score-label { color: rgba(255,255,255,0.28); }
-.rl-card-sub .rl-caller-score-col { margin-left: auto; text-align: right; }
-
-/* CTA row */
-.rl-cta-row {
-  display: flex; gap: 1rem; justify-content: center;
-  flex-wrap: wrap; padding: 2.5rem 1.5rem 4.5rem;
-}
-
-/* All-time table: rank as architectural number + tier left-border */
-.tier-rank-large {
-  font-family: var(--font-heading);
-  font-size: 1.625rem; font-weight: 900;
-  color: rgba(255,255,255,0.16); letter-spacing: -0.02em;
-  line-height: 1;
-}
-tr[data-tier="diamond"] .tier-rank-large { color: rgba(56,255,147,0.45); }
-
-/* Tier accent line on first cell */
-tr[data-tier] td:first-child { padding-left: 1.5rem; position: relative; }
-tr[data-tier] td:first-child::before {
-  content: ''; position: absolute;
-  left: 0; top: 25%; bottom: 25%;
-  width: 2px; border-radius: 1px;
-}
-tr[data-tier="diamond"] td:first-child::before { background: rgba(56,255,147,0.6); }
-tr[data-tier="gold"]    td:first-child::before { background: rgba(56,255,147,0.35); }
-tr[data-tier="silver"]  td:first-child::before { background: rgba(56,255,147,0.18); }
-tr[data-tier="bronze"]  td:first-child::before { background: rgba(255,255,255,0.18); }
-tr[data-tier="base"]    td:first-child::before { background: rgba(255,255,255,0.07); }
-
-/* Section headings */
-.gradient-heading {
-  font-family: var(--font-heading) !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.02em !important;
-}
-.eyebrow {
-  font-family: var(--font-mono) !important;
-  letter-spacing: 0.18em !important;
-}
-
 /* ===== HOME HERO STATS STRIP ===== */
 .hero-stats-strip {
   display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
@@ -1333,25 +1139,34 @@ tr[data-tier="base"]    td:first-child::before { background: rgba(255,255,255,0.
 
 <!-- Home -->
 <div id="home-page" class="page active" data-screen-label="Home">
-  <div class="rl-masthead">
-    <div class="rl-masthead-meta">
-      <span class="live-dot"></span>
-      Season 1 &nbsp;·&nbsp; <span id="masthead-count">—</span> Callers &nbsp;·&nbsp; Live
+  <section class="section">
+    <div class="container text-center">
+      <span class="eyebrow">01 / top callers</span>
+      <h1 class="gradient-heading">Hall of Fame</h1>
+      <p class="mt-2" style="color: var(--text-secondary); max-width: 520px; margin-left: auto; margin-right: auto;">
+        The best crypto callers on Altcoinist. Ranked by signal quality, trading activity, and community reach.
+      </p>
+      <div class="hero-stats-strip" id="hero-stats"></div>
     </div>
-    <h1 class="rl-title">THE <span class="rl-title-accent">ALTCOINIST</span><br>LEADERBOARD</h1>
-  </div>
 
-  <div class="rl-featured" id="rl-featured"></div>
+    <div class="podium">
+      <div class="podium-position second" id="podium-second"></div>
+      <div class="podium-position first"  id="podium-first"></div>
+      <div class="podium-position third"  id="podium-third"></div>
+    </div>
 
-  <div class="rl-cta-row">
-    <a href="https://t.me/altcoinist_bot" target="_blank" class="btn btn-primary">
-      <span>Start Calling — Get Ranked</span>
-      <span class="btn-arrow" aria-hidden="true">&rarr;</span>
-    </a>
-    <button class="btn btn-secondary" onclick="switchPage('alltime'); return false;">
-      Full Rankings <span aria-hidden="true" style="font-size:0.6875rem;">&darr;</span>
-    </button>
-  </div>
+    <div class="tier-summary" id="tier-summary"></div>
+
+    <div class="text-center mt-4" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+      <a href="https://t.me/altcoinist_bot" target="_blank" class="btn btn-primary">
+        <span>Start Calling — Get Ranked</span>
+        <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+      </a>
+      <button class="btn btn-secondary" onclick="switchPage('alltime'); return false;">
+        View Full Rankings <span aria-hidden="true" style="font-size:0.6875rem;">&darr;</span>
+      </button>
+    </div>
+  </section>
 </div>
 
 <!-- All-Time -->
@@ -1654,7 +1469,9 @@ async function loadData() {
     const wR = document.getElementById('week-range'); if (wR) wR.textContent = getCurrentWeekRange();
     const mR = document.getElementById('month-range'); if (mR) mR.textContent = getCurrentMonth();
 
-    renderFeaturedCallers();
+    renderPodium();
+    renderTierSummary();
+    renderHeroStats();
     renderAlltimeTable();
     renderWeeklyGrid();
     renderMonthlyGrid();
@@ -1677,60 +1494,60 @@ function switchPage(name) {
   window.scrollTo(0, 0);
 }
 
-// --------- Featured callers (home page) ----------
-function renderFeaturedCallers() {
-  const mc = document.getElementById('masthead-count');
-  if (mc) mc.textContent = affiliatesData.length;
+// --------- Podium ----------
+function renderPodium() {
+  if (affiliatesData.length < 3) return;
+  const positions = [affiliatesData[0], affiliatesData[1], affiliatesData[2]];
+  const ids = ['podium-first','podium-second','podium-third'];
+  positions.forEach((a, i) => {
+    document.getElementById(ids[i]).innerHTML = `
+      <div class="podium-rank-badge">#${i+1}</div>
+      <img src="${a.avatar}" alt="${a.name}" class="podium-avatar" loading="lazy"
+        onerror="handleAvatarError(this, '${a.name.replace(/'/g,"\\'")}', '${a.handle.replace(/'/g,"\\'")}')">
+      <div class="podium-name">${a.name}</div>
+      <div class="podium-handle-sub">${a.handle}</div>
+      ${tierChip(a.tier)}
+      <div class="mono" style="margin-top:0.5rem;color:var(--accent);font-weight:700;font-size:0.9375rem">${fmtScore(a.total)}</div>
+    `;
+  });
+}
 
-  const container = document.getElementById('rl-featured');
-  if (!container || !affiliatesData.length) return;
+function renderTierSummary() {
+  const counts = { diamond:0, gold:0, silver:0, bronze:0, base:0 };
+  for (const a of affiliatesData) counts[a.tier.key]++;
+  const order = [
+    ['diamond','Diamond', counts.diamond],
+    ['gold',   'Gold',    counts.gold],
+    ['silver', 'Silver',  counts.silver],
+    ['bronze', 'Bronze',  counts.bronze],
+    ['base',   'Base',    counts.base],
+  ];
+  document.getElementById('tier-summary').innerHTML = order.map(([k,label,n]) => `
+    <div class="tier-pill tier-${k}">
+      <span class="tl"><span class="dot"></span>${label}</span>
+      <span class="tv">${n}</span>
+      <span class="ts">${n === 1 ? 'affiliate' : 'affiliates'}</span>
+    </div>
+  `).join('');
+}
 
-  const safe = s => (s||'').replace(/'/g,"\\'");
-
-  const heroCard = a => `
-    <div class="rl-card-hero" onclick="openAffiliateModal(${a.rank},'alltime')">
-      <div class="ghost-rank">01</div>
-      <div class="rl-rank-num">#01</div>
-      <div class="rl-caller-info">
-        <img class="rl-caller-avatar" src="${a.avatar}" alt="${a.name}" loading="lazy"
-          onerror="handleAvatarError(this,'${safe(a.name)}','${safe(a.handle)}')">
-        <div class="rl-caller-text">
-          <div class="rl-caller-name">${a.name}</div>
-          <div class="rl-caller-handle">${a.handle}</div>
-          <div style="margin-top:0.5rem;">${tierChip(a.tier)}</div>
-        </div>
-      </div>
-      <div class="rl-caller-score-col">
-        <span class="rl-caller-score">${fmtScore(a.total)}</span>
-        <span class="rl-caller-score-label">Total Score</span>
-        <button class="rl-share-btn"
-          onclick="event.stopPropagation();shareCallerCard(${a.rank},'alltime')">
-          ↗ Share Card
-        </button>
-      </div>
-    </div>`;
-
-  const subCard = (a, idx) => `
-    <div class="rl-card-sub" onclick="openAffiliateModal(${a.rank},'alltime')">
-      <div class="ghost-rank">0${idx+1}</div>
-      <div class="rl-rank-num">#0${idx+1}</div>
-      <img class="rl-caller-avatar" src="${a.avatar}" alt="${a.name}" loading="lazy"
-        onerror="handleAvatarError(this,'${safe(a.name)}','${safe(a.handle)}')">
-      <div class="rl-caller-text" style="min-width:0;flex:1;">
-        <div class="rl-caller-name">${a.name}</div>
-        <div class="rl-caller-handle">${a.handle}</div>
-      </div>
-      <div class="rl-caller-score-col">
-        <span class="rl-caller-score">${fmtScore(a.total)}</span>
-        <span class="rl-caller-score-label">Score</span>
-      </div>
-    </div>`;
-
-  const sub = affiliatesData.length >= 3
-    ? `<div class="rl-sub-row">${subCard(affiliatesData[1],1)}${subCard(affiliatesData[2],2)}</div>`
-    : '';
-
-  container.innerHTML = heroCard(affiliatesData[0]) + sub;
+// --------- Hero stats strip ----------
+function renderHeroStats() {
+  const el = document.getElementById('hero-stats');
+  if (!el || !affiliatesData.length) return;
+  const top = affiliatesData[0];
+  const active = affiliatesData.filter(a => a.total > 0).length;
+  el.innerHTML = [
+    { val: affiliatesData.length,     label: 'Callers' },
+    { val: fmtScore(top.total),       label: 'Top Score' },
+    { val: top.handle,                label: '#1 Caller' },
+    { val: active,                    label: 'Active' },
+  ].map(s => `
+    <div class="hero-stat">
+      <span class="hero-stat-val">${s.val}</span>
+      <span class="hero-stat-label">${s.label}</span>
+    </div>
+  `).join('');
 }
 
 // --------- All-Time table ----------
@@ -1760,7 +1577,7 @@ function renderAlltimeTable() {
     const pct = Math.min(100, Math.max(2, (a.total / maxTotal) * 100));
     html += `
       <tr data-tier="${a.tier.key}" onclick="openAffiliateModal(${a.rank},'alltime')">
-        <td><span class="tier-rank-large">${String(a.rank).padStart(2,'0')}</span></td>
+        <td><span class="rank">#${a.rank}</span></td>
         <td>
           <div style="display:flex;align-items:center;gap:0.75rem;">
             <img src="${a.avatar}" alt="${a.name}" loading="lazy"
@@ -2271,7 +2088,7 @@ function shareCallerCard(rank, src) {
     // Tier
     const tKey = (a.tier && a.tier.key) || 'base';
     const tLbl = (a.tier && a.tier.label) || 'Base';
-    const tC = { diamond:'rgba(56,255,147,0.95)', gold:'rgba(56,255,147,0.7)', silver:'rgba(56,255,147,0.45)', bronze:'rgba(255,255,255,0.5)', base:'rgba(255,255,255,0.28)' };
+    const tC = { diamond:'rgba(255,255,255,0.88)', gold:'rgba(255,215,100,0.8)', silver:'rgba(192,200,210,0.8)', bronze:'rgba(200,130,80,0.75)', base:'rgba(255,255,255,0.32)' };
     ctx.fillStyle = tC[tKey] || 'rgba(255,255,255,0.45)';
     ctx.font = '500 15px "JetBrains Mono","Courier New",monospace';
     ctx.fillText(tLbl.toUpperCase() + '  TIER', 60, 265);
