@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Hall — Altcoinist Inner Circle</title>
+
+<meta property="og:title" content="The Hall — Altcoinist Inner Circle" />
+<meta property="og:description" content="The top of the cohort. Verified by the work." />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #000000;
+    --card-bg: rgba(8, 8, 8, 0.85);
+    --card-bg-strong: rgba(14, 14, 14, 0.92);
+    --border: rgba(255, 255, 255, 0.06);
+    --border-strong: rgba(255, 255, 255, 0.12);
+    --text: #ffffff;
+    --text-70: rgba(255, 255, 255, 0.70);
+    --text-55: rgba(255, 255, 255, 0.55);
+    --text-30: rgba(255, 255, 255, 0.30);
+    --brand: #38FF93;
+    --brand-80: rgba(56, 255, 147, 0.80);
+    --brand-60: rgba(56, 255, 147, 0.60);
+    --brand-30: rgba(56, 255, 147, 0.30);
+    --brand-08: rgba(56, 255, 147, 0.08);
+    --glow-card: 0 0 30px rgba(56, 255, 147, 0.08);
+    --glow-strong: 0 0 30px rgba(56, 255, 147, 0.2), inset 0 0 20px rgba(56, 255, 147, 0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* === NAV === */
+  .nav {
+    padding: 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .nav-brand .dot { color: var(--brand); }
+  .nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-55);
+    cursor: pointer;
+    transition: color 200ms;
+  }
+  .nav-link:hover { color: var(--brand); }
+
+  /* === EYEBROW + DIVIDER === */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-60);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--brand); }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-30);
+    margin: 64px 0 36px 0;
+  }
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(56, 255, 147, 0.25), rgba(255, 255, 255, 0.04));
+  }
+
+  /* === HERO === */
+  .hero {
+    padding: 72px 0 32px 0;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    max-width: 820px;
+  }
+  .hero h1 .accent { color: var(--brand); }
+  .hero p {
+    color: var(--text-55);
+    font-size: 15px;
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+  }
+  .hero-stats .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-30);
+    margin-bottom: 8px;
+  }
+  .hero-stats .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .hero-stats .value .sm { color: var(--text-55); font-size: 14px; }
+
+  /* === SECTION HEAD === */
+  .section-heading {
+    font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    color: var(--text-55);
+    font-size: 14px;
+    margin-bottom: 32px;
+    max-width: 640px;
+  }
+
+  /* === THE WALL — TIER-LED CARDS === */
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .wall { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .wall { grid-template-columns: 1fr; } }
+
+  .athlete {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    overflow: hidden;
+    transition: all 300ms;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+  }
+  .athlete::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle at top right, rgba(56, 255, 147, 0.06), transparent 60%);
+    pointer-events: none;
+  }
+  .athlete.tier-aplus::before {
+    background: radial-gradient(circle at top right, rgba(56, 255, 147, 0.14), transparent 60%);
+  }
+  .athlete:hover {
+    border-color: var(--brand-30);
+    box-shadow: var(--glow-card);
+  }
+  .athlete.tier-aplus {
+    border-color: var(--brand-30);
+  }
+  .athlete.tier-aplus:hover {
+    box-shadow: var(--glow-strong);
+  }
+
+  .ath-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .ath-avatar-wrap {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+  .ath-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+  .ath-avatar-fallback {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a3a2a, #061a10);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--brand);
+  }
+  /* Verified ring for A+ */
+  .athlete.tier-aplus .ath-avatar,
+  .athlete.tier-aplus .ath-avatar-fallback {
+    border: 1.5px solid var(--brand);
+    box-shadow: 0 0 0 2px rgba(0,0,0,1), 0 0 0 3px var(--brand-30);
+  }
+  .verified-check {
+    position: absolute;
+    bottom: -4px; right: -4px;
+    width: 18px; height: 18px;
+    background: var(--brand);
+    border-radius: 50%;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--bg);
+    line-height: 1;
+  }
+  .ath-meta { min-width: 0; flex: 1; }
+  .ath-handle {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .ath-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-60);
+    margin-top: 3px;
+  }
+
+  /* The tier — hero of the card */
+  .ath-tier-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0 12px 0;
+    text-align: center;
+    position: relative;
+  }
+  .ath-tier-letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+  .ath-tier-letter.aplus { color: var(--brand); }
+  .ath-tier-letter.a { color: var(--text); }
+  .ath-tier-letter.b { color: var(--text-70); }
+  .ath-tier-letter.c { color: var(--text-55); }
+  .ath-tier-letter.d { color: var(--text-30); }
+  .ath-tier-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-30);
+  }
+  .ath-tier-meta .brand { color: var(--brand-60); }
+
+  /* Receipts row at the bottom of the card */
+  .ath-receipts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .ath-r-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-30);
+    margin-bottom: 3px;
+  }
+  .ath-r-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-70);
+  }
+
+  /* === FOUR ROOMS === */
+  .rooms {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .rooms { grid-template-columns: 1fr; } }
+
+  .room-card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 300ms;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    width: 100%;
+  }
+  .room-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle at top right, rgba(56, 255, 147, 0.07), transparent 60%);
+    pointer-events: none;
+  }
+  .room-card:hover {
+    border-color: var(--brand-30);
+    box-shadow: var(--glow-card);
+  }
+  .room-card.is-open {
+    border-color: var(--brand-30);
+    box-shadow: var(--glow-card);
+  }
+  .room-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand-60);
+    margin-bottom: 12px;
+  }
+  .room-card h4 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .room-card p {
+    color: var(--text-55);
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .room-cta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+
+  /* Sub-panel that opens */
+  .sub-panel {
+    margin-top: 24px;
+    background: var(--card-bg-strong);
+    border: 1px solid var(--brand-30);
+    border-radius: 16px;
+    padding: 36px;
+    display: none;
+    box-shadow: var(--glow-card);
+  }
+  .sub-panel.open { display: block; }
+  .sub-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .sub-panel-head .sp-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand-60);
+    margin-bottom: 6px;
+  }
+  .sub-panel-head h3 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .sub-panel-head .titles { flex: 1; }
+  .sub-panel-close {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-55);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 200ms;
+  }
+  .sub-panel-close:hover { color: var(--brand); border-color: var(--brand-30); }
+
+  /* Chain chips */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-55);
+    padding: 6px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 200ms;
+    background: transparent;
+  }
+  .chip:hover { color: var(--brand); border-color: var(--brand-30); }
+  .chip.active {
+    color: var(--bg);
+    background: var(--brand);
+    border-color: var(--brand);
+  }
+
+  /* Mini athlete row for sub-panels */
+  .mini-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  .mini-row:first-of-type { border-top: none; }
+  .mini-avatar-wrap {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+  .mini-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+  .mini-avatar.verified {
+    border: 1.5px solid var(--brand);
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,1), 0 0 0 2.5px var(--brand-30);
+  }
+  .mini-info { flex: 1; min-width: 0; }
+  .mini-handle { font-size: 14px; font-weight: 600; }
+  .mini-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-55);
+    margin-top: 2px;
+  }
+  .mini-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--brand);
+  }
+  .mini-tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: right;
+    min-width: 44px;
+  }
+  .mini-tier.aplus { color: var(--brand); }
+  .mini-tier.a { color: var(--text); }
+  .mini-tier.b { color: var(--text-70); }
+  .mini-tier.c { color: var(--text-55); }
+  .mini-tier.d { color: var(--text-30); }
+
+  /* Tier ladder */
+  .ladder {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 800px) { .ladder { grid-template-columns: 1fr; } }
+  .ladder-rows .lr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  .ladder-rows .lr:first-child { border-top: none; }
+  .lr-letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1;
+    min-width: 50px;
+  }
+  .lr-letter.aplus { color: var(--brand); }
+  .lr-letter.a { color: var(--text); }
+  .lr-letter.b { color: var(--text-70); }
+  .lr-letter.c { color: var(--text-55); }
+  .lr-letter.d { color: var(--text-30); }
+  .lr-name {
+    font-size: 13px;
+    color: var(--text);
+  }
+  .lr-name .desc {
+    color: var(--text-55);
+    font-size: 12px;
+    display: block;
+    margin-top: 2px;
+  }
+  .lr-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-55);
+    letter-spacing: 0.1em;
+  }
+
+  .badge-callout {
+    background: rgba(56, 255, 147, 0.04);
+    border: 1px solid var(--brand-30);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .badge-callout .demo-pfp {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    margin: 0 auto 18px auto;
+    position: relative;
+  }
+  .badge-callout .demo-pfp img {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    border: 2.5px solid var(--brand);
+    box-shadow: 0 0 0 3px rgba(0,0,0,1), 0 0 0 5px var(--brand-30);
+    display: block;
+  }
+  .badge-callout .demo-check {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 32px; height: 32px;
+    background: var(--brand);
+    border-radius: 50%;
+    border: 3px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--bg);
+  }
+  .badge-callout h5 {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .badge-callout p {
+    color: var(--text-55);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* Calls feed */
+  .call-row {
+    display: grid;
+    grid-template-columns: 50px 1fr auto auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  .call-row:first-of-type { border-top: none; padding-top: 4px; }
+  .chain-pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brand-80);
+    background: var(--brand-08);
+    border: 1px solid var(--brand-30);
+    border-radius: 4px;
+    padding: 4px 7px;
+    text-align: center;
+  }
+  .call-ticker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .call-caller {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-55);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .call-pnl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .call-pnl.win { color: var(--brand); }
+  .call-pnl.loss { color: rgba(255, 120, 120, 0.85); }
+  .call-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-30);
+    letter-spacing: 0.1em;
+    text-align: right;
+    min-width: 36px;
+  }
+
+  /* About block */
+  .about {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    overflow: hidden;
+  }
+  .about::before {
+    content: '';
+    position: absolute;
+    bottom: -50%; left: -10%;
+    width: 60%; height: 140%;
+    background: radial-gradient(circle, rgba(56, 255, 147, 0.06), transparent 60%);
+    pointer-events: none;
+  }
+  .about-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+  .about h3 {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  .about p {
+    color: var(--text-55);
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .about .vs-line {
+    color: var(--text-70);
+    font-size: 14px;
+    border-left: 2px solid var(--brand);
+    padding-left: 14px;
+    margin: 18px 0;
+  }
+  .about ul { list-style: none; padding: 0; }
+  .about li {
+    display: flex;
+    align-items: start;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .about li:first-child { border-top: none; padding-top: 0; }
+  .about li::before { content: '→'; color: var(--brand); flex-shrink: 0; }
+  .about li .muted { color: var(--text-55); margin-left: 6px; }
+
+  /* Footer */
+  footer.brand-footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 0 56px 0;
+    margin-top: 80px;
+    color: var(--text-30);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="nav">
+    <div class="nav-brand">altcoinist<span class="dot">.</span> the hall</div>
+    <div class="nav-link" id="nav-about">about the circle</div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">// inner circle · verified by the work</div>
+    <h1>The top of the cohort.<br/><span class="accent">Earned by the work.</span></h1>
+    <p>The Hall is the highlight reel of Altcoinist's Inner Circle. Ranked by rep score, not by referrals. The badge is rare on purpose.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="label">verified A+</div>
+        <div class="value">3</div>
+      </div>
+      <div>
+        <div class="label">cohort size</div>
+        <div class="value">42</div>
+      </div>
+      <div>
+        <div class="label">last refresh</div>
+        <div class="value">W22<span class="sm"> · monday</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 / The Wall -->
+  <div class="section-divider">// 01 / the wall</div>
+  <section>
+    <h2 class="section-heading">Nine names. One standard.</h2>
+    <p class="section-sub">Sorted by rep score. Letter tier is the headline. Volume and reach sit beneath as receipts.</p>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <!-- 02 / Inside the Circle (rooms) -->
+  <div class="section-divider">// 02 / inside the circle</div>
+  <section>
+    <h2 class="section-heading">Four rooms.</h2>
+    <p class="section-sub">Each opens a focused view. Filter the wall by chain. Sort by reach. See the tier system. Read the calls that earned the rank.</p>
+
+    <div class="rooms">
+      <button class="room-card" data-room="chain">
+        <div class="room-eyebrow">// 01 / by chain</div>
+        <h4>Filter by chain.</h4>
+        <p>The Solana specialist. The ETH veteran. The Base degen. Find the right caller for the room you're trading.</p>
+        <div class="room-cta">open the room →</div>
+      </button>
+      <button class="room-card" data-room="reach">
+        <div class="room-eyebrow">// 02 / by reach</div>
+        <h4>By reach.</h4>
+        <p>Rep score rewards the work. Followers reward the megaphone. Sort the wall to see who moves the room.</p>
+        <div class="room-cta">open the room →</div>
+      </button>
+      <button class="room-card" data-room="tier">
+        <div class="room-eyebrow">// 03 / the tier system</div>
+        <h4>The tier system.</h4>
+        <p>What A+ means. Why the badge is rare. How it mirrors on X. The cohort, ranked by the work it ships.</p>
+        <div class="room-cta">open the room →</div>
+      </button>
+      <button class="room-card" data-room="calls">
+        <div class="room-eyebrow">// 04 / top calls</div>
+        <h4>Top calls.</h4>
+        <p>The receipts. Every winning call from the cohort, last 30 days. Ticker, entry, P&L, time. No screenshots.</p>
+        <div class="room-cta">open the room →</div>
+      </button>
+    </div>
+
+    <!-- ROOM: CHAIN -->
+    <div class="sub-panel" id="room-chain">
+      <div class="sub-panel-head">
+        <div class="titles">
+          <div class="sp-eyebrow">// 01 / by chain</div>
+          <h3>Filter by chain.</h3>
+        </div>
+        <button class="sub-panel-close">close</button>
+      </div>
+      <div class="chip-row">
+        <button class="chip active" data-chain="all">All chains</button>
+        <button class="chip" data-chain="sol">Solana</button>
+        <button class="chip" data-chain="eth">Ethereum</button>
+        <button class="chip" data-chain="base">Base</button>
+        <button class="chip" data-chain="sui">Sui</button>
+      </div>
+      <div id="chain-list"></div>
+    </div>
+
+    <!-- ROOM: REACH -->
+    <div class="sub-panel" id="room-reach">
+      <div class="sub-panel-head">
+        <div class="titles">
+          <div class="sp-eyebrow">// 02 / by reach</div>
+          <h3>Sorted by X followers.</h3>
+        </div>
+        <button class="sub-panel-close">close</button>
+      </div>
+      <p style="color: var(--text-55); font-size: 13px; max-width: 540px; margin-bottom: 22px;">The megaphone matters. Big follower counts mean a single post moves rooms. The Hall surfaces both axes.</p>
+      <div id="reach-list"></div>
+    </div>
+
+    <!-- ROOM: TIER SYSTEM -->
+    <div class="sub-panel" id="room-tier">
+      <div class="sub-panel-head">
+        <div class="titles">
+          <div class="sp-eyebrow">// 03 / the tier system</div>
+          <h3>What A+ means.</h3>
+        </div>
+        <button class="sub-panel-close">close</button>
+      </div>
+      <div class="ladder">
+        <div class="ladder-rows">
+          <div class="lr">
+            <div class="lr-letter aplus">A+</div>
+            <div class="lr-name">Verified caller<span class="desc">Top tier. Earns the X badge. The cohort's standard-setter.</span></div>
+            <div class="lr-count">3 athletes</div>
+          </div>
+          <div class="lr">
+            <div class="lr-letter a">A</div>
+            <div class="lr-name">Active contributor<span class="desc">Strong recent performance. One push from verified.</span></div>
+            <div class="lr-count">8 athletes</div>
+          </div>
+          <div class="lr">
+            <div class="lr-letter b">B</div>
+            <div class="lr-name">Consistent operator<span class="desc">Reliable cadence, building a track record.</span></div>
+            <div class="lr-count">13 athletes</div>
+          </div>
+          <div class="lr">
+            <div class="lr-letter c">C</div>
+            <div class="lr-name">In the cohort<span class="desc">Earned the seat. Still climbing.</span></div>
+            <div class="lr-count">12 athletes</div>
+          </div>
+          <div class="lr">
+            <div class="lr-letter d">D</div>
+            <div class="lr-name">Recently inducted<span class="desc">Just joined. Score builds with current activity.</span></div>
+            <div class="lr-count">6 athletes</div>
+          </div>
+        </div>
+        <div class="badge-callout">
+          <div class="demo-pfp">
+            <img src="avatars/rbthreek.jpg" alt="verified pfp" />
+            <div class="demo-check">✓</div>
+          </div>
+          <h5>The Verified Badge.</h5>
+          <p>A+ unlocks the verified ring on the Altcoinist profile. The same badge mirrors on X. The brand and the caller compound together.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROOM: TOP CALLS -->
+    <div class="sub-panel" id="room-calls">
+      <div class="sub-panel-head">
+        <div class="titles">
+          <div class="sp-eyebrow">// 04 / top calls</div>
+          <h3>The receipts. Last 30 days.</h3>
+        </div>
+        <button class="sub-panel-close">close</button>
+      </div>
+      <p style="color: var(--text-55); font-size: 13px; max-width: 540px; margin-bottom: 22px;">Top calls from the cohort. Stamped on the caller's profile. The Hall is what the work looks like in public.</p>
+      <div id="calls-list"></div>
+    </div>
+  </section>
+
+  <!-- 03 / About -->
+  <div class="section-divider" id="about-anchor">// 03 / about the inner circle</div>
+  <section>
+    <div class="about">
+      <div class="about-grid">
+        <div>
+          <h3>The Hall is not the mini app.</h3>
+          <p>The mini app is where the Inner Circle works. A live feed of calls, scans, and tracked tokens from everyone you follow. Filter, snipe, follow, drill into profiles.</p>
+          <div class="vs-line">The Hall is what the rest of crypto sees. The top of the cohort, frozen weekly. Status, not actions.</div>
+          <p>Membership is decided upstream. The verified badge is reserved for A+. Money is for traders. Status is for the cohort.</p>
+        </div>
+        <div>
+          <ul>
+            <li>Verified on-chain <span class="muted">stats sourced from PostHog</span></li>
+            <li>Weekly refresh <span class="muted">numbers update every Monday</span></li>
+            <li>Dynamic score <span class="muted">decays over time, rewards current work</span></li>
+            <li>All-time stats <span class="muted">profile keeps the receipts</span></li>
+            <li>Verified badge <span class="muted">A+ only, mirrored on X</span></li>
+            <li>Chain tagging <span class="muted">primary expertise visible</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="brand-footer">
+    <div>// altcoinist · the hall · v2 mock</div>
+    <div>2026-05-28</div>
+  </footer>
+</div>
+
+<script>
+  // === DATA ===
+  // Real handles from leaderboard-data.json + mock new-feature data.
+  // Sorted by repScore (high → low) per the new activity-based ranking.
+  const athletes = [
+    { handle: '@rbthreek',       avatar: 'avatars/rbthreek.jpg',       chain: 'sol',  repTier: 'A+', repScore: 87, repPeak: 94, vol: '$12.4M', followers: '128K' },
+    { handle: '@chironchain',    avatar: 'avatars/chironchain.jpg',    chain: 'eth',  repTier: 'A+', repScore: 84, repPeak: 89, vol: '$2.1M',  followers: '64K'  },
+    { handle: '@KAPOTHEGOAT01',  avatar: 'avatars/KAPOTHEGOAT01.jpg',  chain: 'sol',  repTier: 'A+', repScore: 81, repPeak: 88, vol: '$1.6M',  followers: '92K'  },
+    { handle: '@Chainriffs',     avatar: 'avatars/Chainriffs.jpg',     chain: 'base', repTier: 'A',  repScore: 76, repPeak: 81, vol: '$1.1M',  followers: '38K'  },
+    { handle: '@mrLCguy',        avatar: 'avatars/mrLCguy.jpg',        chain: 'eth',  repTier: 'A',  repScore: 72, repPeak: 78, vol: '$680K',  followers: '24K'  },
+    { handle: '@deepseektetra',  avatar: 'avatars/deepseektetra.jpg',  chain: 'sol',  repTier: 'A',  repScore: 68, repPeak: 74, vol: '$540K',  followers: '19K'  },
+    { handle: '@N30_cryptoo',    avatar: 'avatars/N30_cryptoo.jpg',    chain: 'sui',  repTier: 'B',  repScore: 64, repPeak: 69, vol: '$410K',  followers: '31K'  },
+    { handle: '@thebasedfrogx',  avatar: 'avatars/thebasedfrogx.jpg',  chain: 'base', repTier: 'B',  repScore: 61, repPeak: 66, vol: '$380K',  followers: '47K'  },
+    { handle: '@Vanxyrus',       avatar: 'avatars/Vanxyrus.jpg',       chain: 'eth',  repTier: 'B',  repScore: 58, repPeak: 64, vol: '$290K',  followers: '12K'  },
+    // Out-of-wall (used in sub-panels)
+    { handle: '@cryptic_tits',   avatar: 'avatars/cryptic_tits.png',   chain: 'sol',  repTier: 'C',  repScore: 52, repPeak: 58, vol: '$240K',  followers: '21K'  },
+    { handle: '@Neolawyer1',     avatar: 'avatars/Neolawyer1.jpg',     chain: 'eth',  repTier: 'C',  repScore: 48, repPeak: 54, vol: '$180K',  followers: '8.2K' },
+    { handle: '@KD11201',        avatar: 'avatars/KD11201.jpg',        chain: 'sui',  repTier: 'D',  repScore: 38, repPeak: 44, vol: '$140K',  followers: '5.6K' }
+  ];
+
+  const calls = [
+    { chain: 'sol',  ticker: '$BONK',  caller: '@rbthreek',       entry: '$0.000018',  pnl:  248, time: '5d'  },
+    { chain: 'eth',  ticker: '$PEPE',  caller: '@chironchain',    entry: '$0.0000091', pnl:   62, time: '6d'  },
+    { chain: 'sol',  ticker: '$WIF',   caller: '@KAPOTHEGOAT01',  entry: '$1.84',      pnl:   39, time: '8d'  },
+    { chain: 'base', ticker: '$DEGEN', caller: '@thebasedfrogx',  entry: '$0.012',     pnl:  -14, time: '11d' },
+    { chain: 'eth',  ticker: '$LDO',   caller: '@mrLCguy',        entry: '$1.42',      pnl:   22, time: '13d' },
+    { chain: 'sol',  ticker: '$JUP',   caller: '@deepseektetra',  entry: '$0.78',      pnl:   54, time: '15d' },
+    { chain: 'sui',  ticker: '$SUI',   caller: '@N30_cryptoo',    entry: '$1.12',      pnl:   31, time: '18d' },
+    { chain: 'base', ticker: '$AERO',  caller: '@Chainriffs',     entry: '$0.94',      pnl:   18, time: '22d' }
+  ];
+
+  const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+
+  // === RENDERERS ===
+  function avatarMarkup(a, opts) {
+    const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
+    const verifiedRing = a.repTier === 'A+';
+    return `
+      <div class="${opts && opts.mini ? 'mini-avatar-wrap' : 'ath-avatar-wrap'}">
+        <img class="${opts && opts.mini ? 'mini-avatar' + (verifiedRing ? ' verified' : '') : 'ath-avatar'}" src="${a.avatar}" alt="" onerror="this.outerHTML='<div class=\\'${opts && opts.mini ? 'mini-avatar' : 'ath-avatar-fallback'}\\'>${initials}</div>'"/>
+        ${verifiedRing && !opts?.mini ? '<div class="verified-check">✓</div>' : ''}
+      </div>`;
+  }
+
+  function tierClass(tier) {
+    return { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' }[tier] || 'b';
+  }
+
+  function athleteCard(a) {
+    const tc = tierClass(a.repTier);
+    return `
+      <a class="athlete tier-${tc}" href="#">
+        <div class="ath-head">
+          ${avatarMarkup(a)}
+          <div class="ath-meta">
+            <div class="ath-handle">${a.handle}</div>
+            <div class="ath-sub">${chainLabel[a.chain]}</div>
+          </div>
+        </div>
+        <div class="ath-tier-block">
+          <div class="ath-tier-letter ${tc}">${a.repTier}</div>
+          <div class="ath-tier-meta">current <span class="brand">${a.repScore}</span> · peak ${a.repPeak}</div>
+        </div>
+        <div class="ath-receipts">
+          <div>
+            <div class="ath-r-label">volume</div>
+            <div class="ath-r-value">${a.vol}</div>
+          </div>
+          <div>
+            <div class="ath-r-label">followers</div>
+            <div class="ath-r-value">${a.followers}</div>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  function miniRow(a, opts) {
+    const tc = tierClass(a.repTier);
+    const trailing = opts && opts.show === 'followers'
+      ? `<div class="mini-stat">${a.followers}</div>`
+      : `<div class="mini-tier ${tc}">${a.repTier}</div>`;
+    return `
+      <div class="mini-row">
+        ${avatarMarkup(a, { mini: true })}
+        <div class="mini-info">
+          <div class="mini-handle">${a.handle}</div>
+          <div class="mini-meta">${chainLabel[a.chain]} · score ${a.repScore}</div>
+        </div>
+        ${trailing}
+      </div>`;
+  }
+
+  function callRow(c) {
+    return `
+      <div class="call-row">
+        <span class="chain-pill">${chainLabel[c.chain]}</span>
+        <div>
+          <div class="call-ticker">${c.ticker}</div>
+          <div class="call-caller">${c.caller} · entry ${c.entry}</div>
+        </div>
+        <div class="call-pnl ${c.pnl >= 0 ? 'win' : 'loss'}">${c.pnl >= 0 ? '+' : ''}${c.pnl}%</div>
+        <div class="call-time">${c.time}</div>
+      </div>`;
+  }
+
+  // === INITIAL RENDER ===
+  // Wall = top 9 by repScore
+  const top9 = [...athletes].sort((a, b) => b.repScore - a.repScore).slice(0, 9);
+  document.getElementById('wall').innerHTML = top9.map(athleteCard).join('');
+
+  // Chain list (default = all)
+  function renderChainList(chain) {
+    const list = (chain === 'all' ? [...athletes] : athletes.filter(a => a.chain === chain))
+      .sort((a, b) => b.repScore - a.repScore)
+      .slice(0, 8);
+    document.getElementById('chain-list').innerHTML = list.length
+      ? list.map(a => miniRow(a)).join('')
+      : `<p style="color: var(--text-55); font-size: 13px; font-family: 'JetBrains Mono', monospace;">No athletes on this chain yet.</p>`;
+  }
+  renderChainList('all');
+
+  // Reach list = sorted by followers
+  const byReach = [...athletes].sort((a, b) => {
+    const fa = parseFloat(a.followers); const fb = parseFloat(b.followers);
+    return fb - fa;
+  }).slice(0, 8);
+  document.getElementById('reach-list').innerHTML = byReach.map(a => miniRow(a, { show: 'followers' })).join('');
+
+  // Calls list
+  document.getElementById('calls-list').innerHTML = calls.map(callRow).join('');
+
+  // === INTERACTIONS ===
+  // Room cards open sub-panels
+  document.querySelectorAll('[data-room]').forEach(card => {
+    card.addEventListener('click', () => {
+      const room = card.dataset.room;
+      const panel = document.getElementById('room-' + room);
+      const isOpen = panel.classList.contains('open');
+      document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('open'));
+      document.querySelectorAll('.room-card').forEach(c => c.classList.remove('is-open'));
+      if (!isOpen) {
+        panel.classList.add('open');
+        card.classList.add('is-open');
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      }
+    });
+  });
+
+  // Close buttons
+  document.querySelectorAll('.sub-panel-close').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const panel = btn.closest('.sub-panel');
+      const roomId = panel.id.replace('room-', '');
+      panel.classList.remove('open');
+      const card = document.querySelector(`[data-room="${roomId}"]`);
+      if (card) card.classList.remove('is-open');
+    });
+  });
+
+  // Chain chips inside the chain room
+  document.querySelectorAll('[data-chain]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('[data-chain]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      renderChainList(chip.dataset.chain);
+    });
+  });
+
+  // Nav: about anchor scroll
+  document.getElementById('nav-about').addEventListener('click', () => {
+    document.getElementById('about-anchor').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>

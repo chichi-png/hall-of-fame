@@ -7,6 +7,10 @@
     {
       "source": "/leaderboard",
       "destination": "/leaderboard.html"
+    },
+    {
+      "source": "/hall",
+      "destination": "/hall.html"
     }
   ],
   "cleanUrls": true,
