@@ -308,27 +308,15 @@
   }
   .ath-tier-meta .brand { color: var(--brand-60); }
 
-  /* Receipts row at the bottom of the card */
+  /* Receipts — one calm line at the bottom of the card */
   .ath-receipts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
     padding-top: 14px;
     border-top: 1px solid var(--border);
-  }
-  .ath-r-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 8px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.08em;
     color: var(--text-30);
-    margin-bottom: 3px;
-  }
-  .ath-r-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-70);
+    text-align: center;
   }
 
   /* === FOUR ROOMS === */
@@ -722,6 +710,26 @@
   .about li::before { content: '→'; color: var(--brand); flex-shrink: 0; }
   .about li .muted { color: var(--text-55); margin-left: 6px; }
 
+  /* Quiet way-in line */
+  .about-wayin {
+    position: relative;
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--text-55);
+  }
+  .about-wayin a {
+    color: var(--brand);
+    text-decoration: none;
+    margin-left: 10px;
+    transition: opacity 200ms;
+  }
+  .about-wayin a:hover { opacity: 0.7; }
+
   /* Footer */
   footer.brand-footer {
     border-top: 1px solid var(--border);
@@ -751,9 +759,9 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="eyebrow">// inner circle · verified by the work</div>
+    <div class="eyebrow">// the inner circle</div>
     <h1>The top of the cohort.<br/><span class="accent">Earned by the work.</span></h1>
-    <p>The Hall of Fame is the highlight reel of Altcoinist's Inner Circle. Ranked by rep score, not by referrals. The badge is rare on purpose.</p>
+    <p>Elite members of the Inner Circle. Ranked by rep score, not referrals.</p>
     <div class="hero-stats">
       <div>
         <div class="label">verified A+</div>
@@ -771,42 +779,42 @@
   </section>
 
   <!-- 01 / The Wall -->
-  <div class="section-divider">// 01 / the wall</div>
+  <div class="section-divider">// the wall</div>
   <section>
     <h2 class="section-heading">Nine names. One standard.</h2>
-    <p class="section-sub">Sorted by rep score. Letter tier is the headline. Volume and reach sit beneath as receipts.</p>
+    <p class="section-sub">Sorted by rep score.</p>
     <div class="wall" id="wall"></div>
   </section>
 
   <!-- 02 / Inside the Circle (rooms) -->
-  <div class="section-divider">// 02 / inside the circle</div>
+  <div class="section-divider">// inside the circle</div>
   <section>
     <h2 class="section-heading">Four rooms.</h2>
-    <p class="section-sub">Each opens a focused view. Filter the wall by chain. Sort by reach. See the tier system. Read the calls that earned the rank.</p>
+    <p class="section-sub">Each opens a focused view.</p>
 
     <div class="rooms">
       <button class="room-card" data-room="chain">
-        <div class="room-eyebrow">// 01 / by chain</div>
+        <div class="room-eyebrow">// by chain</div>
         <h4>Filter by chain.</h4>
-        <p>The Solana specialist. The ETH veteran. The Base degen. Find the right caller for the room you're trading.</p>
+        <p>Find the caller for the chain you trade.</p>
         <div class="room-cta">open the room →</div>
       </button>
       <button class="room-card" data-room="reach">
-        <div class="room-eyebrow">// 02 / by reach</div>
+        <div class="room-eyebrow">// by reach</div>
         <h4>By reach.</h4>
-        <p>Rep score rewards the work. Followers reward the megaphone. Sort the wall to see who moves the room.</p>
+        <p>Sort by followers. See who moves the room.</p>
         <div class="room-cta">open the room →</div>
       </button>
       <button class="room-card" data-room="tier">
-        <div class="room-eyebrow">// 03 / the tier system</div>
+        <div class="room-eyebrow">// the tier system</div>
         <h4>The tier system.</h4>
-        <p>What A+ means. Why the badge is rare. How it mirrors on X. The cohort, ranked by the work it ships.</p>
+        <p>What A+ means, and why the badge is rare.</p>
         <div class="room-cta">open the room →</div>
       </button>
       <button class="room-card" data-room="calls">
-        <div class="room-eyebrow">// 04 / top calls</div>
+        <div class="room-eyebrow">// top calls</div>
         <h4>Top calls.</h4>
-        <p>The receipts. Every winning call from the cohort, last 30 days. Ticker, entry, P&L, time. No screenshots.</p>
+        <p>Every winning call, last 30 days. No screenshots.</p>
         <div class="room-cta">open the room →</div>
       </button>
     </div>
@@ -815,7 +823,7 @@
     <div class="sub-panel" id="room-chain">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 01 / by chain</div>
+          <div class="sp-eyebrow">// by chain</div>
           <h3>Filter by chain.</h3>
         </div>
         <button class="sub-panel-close">close</button>
@@ -834,7 +842,7 @@
     <div class="sub-panel" id="room-reach">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 02 / by reach</div>
+          <div class="sp-eyebrow">// by reach</div>
           <h3>Sorted by X followers.</h3>
         </div>
         <button class="sub-panel-close">close</button>
@@ -847,7 +855,7 @@
     <div class="sub-panel" id="room-tier">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 03 / the tier system</div>
+          <div class="sp-eyebrow">// the tier system</div>
           <h3>What A+ means.</h3>
         </div>
         <button class="sub-panel-close">close</button>
@@ -895,7 +903,7 @@
     <div class="sub-panel" id="room-calls">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 04 / top calls</div>
+          <div class="sp-eyebrow">// top calls</div>
           <h3>The receipts. Last 30 days.</h3>
         </div>
         <button class="sub-panel-close">close</button>
@@ -906,7 +914,7 @@
   </section>
 
   <!-- 03 / About -->
-  <div class="section-divider" id="about-anchor">// 03 / about the inner circle</div>
+  <div class="section-divider" id="about-anchor">// about the inner circle</div>
   <section>
     <div class="about">
       <div class="about-grid">
@@ -914,7 +922,7 @@
           <h3>The Hall of Fame is not the mini app.</h3>
           <p>The mini app is where the Inner Circle works. A live feed of calls, scans, and tracked tokens from everyone you follow. Filter, snipe, follow, drill into profiles.</p>
           <div class="vs-line">The Hall of Fame is what the rest of crypto sees. The top of the cohort, frozen weekly. Status, not actions.</div>
-          <p>Membership is decided upstream. The verified badge is reserved for A+. Money is for traders. Status is for the cohort.</p>
+          <p>The verified badge is reserved for A+. Money is for traders. Status is for the cohort.</p>
         </div>
         <div>
           <ul>
@@ -926,13 +934,17 @@
             <li>Chain tagging <span class="muted">primary expertise visible</span></li>
           </ul>
         </div>
+        <div class="about-wayin">
+          Membership is earned upstream.
+          <a href="https://t.me/altcoinist_bot" target="_blank" rel="noopener">How to get into the Circle →</a>
+        </div>
       </div>
     </div>
   </section>
 
   <footer class="brand-footer">
-    <div>// altcoinist · the hall of fame · v2 mock</div>
-    <div>2026-05-28</div>
+    <div>// altcoinist · the hall of fame</div>
+    <div>2026</div>
   </footer>
 </div>
 
@@ -978,16 +990,7 @@
           <div class="ath-tier-letter ${tc}">${a.repTier}</div>
           <div class="ath-tier-meta">current <span class="brand">${a.repScore}</span> · peak ${a.repPeak}</div>
         </div>
-        <div class="ath-receipts">
-          <div>
-            <div class="ath-r-label">volume</div>
-            <div class="ath-r-value">${a.vol}</div>
-          </div>
-          <div>
-            <div class="ath-r-label">followers</div>
-            <div class="ath-r-value">${a.followers}</div>
-          </div>
-        </div>
+        <div class="ath-receipts">${a.vol} vol · ${a.followers} flw</div>
       </a>`;
   }
 

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Hall — Altcoinist Inner Circle</title>
+<title>The Hall of Fame — Altcoinist Inner Circle</title>
 
-<meta property="og:title" content="The Hall — Altcoinist Inner Circle" />
+<meta property="og:title" content="The Hall of Fame — Altcoinist Inner Circle" />
 <meta property="og:description" content="The top of the cohort. Verified by the work." />
 <meta name="twitter:card" content="summary_large_image" />
 
@@ -308,27 +308,15 @@
   }
   .ath-tier-meta .brand { color: var(--brand-60); }
 
-  /* Receipts row at the bottom of the card */
+  /* Receipts — one calm line at the bottom of the card */
   .ath-receipts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
     padding-top: 14px;
     border-top: 1px solid var(--border);
-  }
-  .ath-r-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 8px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.08em;
     color: var(--text-30);
-    margin-bottom: 3px;
-  }
-  .ath-r-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-70);
+    text-align: center;
   }
 
   /* === FOUR ROOMS === */
@@ -722,6 +710,26 @@
   .about li::before { content: '→'; color: var(--brand); flex-shrink: 0; }
   .about li .muted { color: var(--text-55); margin-left: 6px; }
 
+  /* Quiet way-in line */
+  .about-wayin {
+    position: relative;
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--text-55);
+  }
+  .about-wayin a {
+    color: var(--brand);
+    text-decoration: none;
+    margin-left: 10px;
+    transition: opacity 200ms;
+  }
+  .about-wayin a:hover { opacity: 0.7; }
+
   /* Footer */
   footer.brand-footer {
     border-top: 1px solid var(--border);
@@ -742,15 +750,18 @@
 <div class="container">
 
   <nav class="nav">
-    <div class="nav-brand">altcoinist<span class="dot">.</span> the hall</div>
-    <div class="nav-link" id="nav-about">about the circle</div>
+    <div class="nav-brand">altcoinist<span class="dot">.</span> the hall of fame</div>
+    <div class="nav-links" style="display:flex; gap:24px; align-items:center;">
+      <a class="nav-link" href="/leaderboard">the leaderboard</a>
+      <div class="nav-link" id="nav-about">about the circle</div>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="eyebrow">// inner circle · verified by the work</div>
+    <div class="eyebrow">// the inner circle</div>
     <h1>The top of the cohort.<br/><span class="accent">Earned by the work.</span></h1>
-    <p>The Hall is the highlight reel of Altcoinist's Inner Circle. Ranked by rep score, not by referrals. The badge is rare on purpose.</p>
+    <p>Elite members of the Inner Circle. Ranked by rep score, not referrals.</p>
     <div class="hero-stats">
       <div>
         <div class="label">verified A+</div>
@@ -768,42 +779,42 @@
   </section>
 
   <!-- 01 / The Wall -->
-  <div class="section-divider">// 01 / the wall</div>
+  <div class="section-divider">// the wall</div>
   <section>
     <h2 class="section-heading">Nine names. One standard.</h2>
-    <p class="section-sub">Sorted by rep score. Letter tier is the headline. Volume and reach sit beneath as receipts.</p>
+    <p class="section-sub">Sorted by rep score.</p>
     <div class="wall" id="wall"></div>
   </section>
 
   <!-- 02 / Inside the Circle (rooms) -->
-  <div class="section-divider">// 02 / inside the circle</div>
+  <div class="section-divider">// inside the circle</div>
   <section>
     <h2 class="section-heading">Four rooms.</h2>
-    <p class="section-sub">Each opens a focused view. Filter the wall by chain. Sort by reach. See the tier system. Read the calls that earned the rank.</p>
+    <p class="section-sub">Each opens a focused view.</p>
 
     <div class="rooms">
       <button class="room-card" data-room="chain">
-        <div class="room-eyebrow">// 01 / by chain</div>
+        <div class="room-eyebrow">// by chain</div>
         <h4>Filter by chain.</h4>
-        <p>The Solana specialist. The ETH veteran. The Base degen. Find the right caller for the room you're trading.</p>
+        <p>Find the caller for the chain you trade.</p>
         <div class="room-cta">open the room →</div>
       </button>
       <button class="room-card" data-room="reach">
-        <div class="room-eyebrow">// 02 / by reach</div>
+        <div class="room-eyebrow">// by reach</div>
         <h4>By reach.</h4>
-        <p>Rep score rewards the work. Followers reward the megaphone. Sort the wall to see who moves the room.</p>
+        <p>Sort by followers. See who moves the room.</p>
         <div class="room-cta">open the room →</div>
       </button>
       <button class="room-card" data-room="tier">
-        <div class="room-eyebrow">// 03 / the tier system</div>
+        <div class="room-eyebrow">// the tier system</div>
         <h4>The tier system.</h4>
-        <p>What A+ means. Why the badge is rare. How it mirrors on X. The cohort, ranked by the work it ships.</p>
+        <p>What A+ means, and why the badge is rare.</p>
         <div class="room-cta">open the room →</div>
       </button>
       <button class="room-card" data-room="calls">
-        <div class="room-eyebrow">// 04 / top calls</div>
+        <div class="room-eyebrow">// top calls</div>
         <h4>Top calls.</h4>
-        <p>The receipts. Every winning call from the cohort, last 30 days. Ticker, entry, P&L, time. No screenshots.</p>
+        <p>Every winning call, last 30 days. No screenshots.</p>
         <div class="room-cta">open the room →</div>
       </button>
     </div>
@@ -812,7 +823,7 @@
     <div class="sub-panel" id="room-chain">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 01 / by chain</div>
+          <div class="sp-eyebrow">// by chain</div>
           <h3>Filter by chain.</h3>
         </div>
         <button class="sub-panel-close">close</button>
@@ -831,12 +842,12 @@
     <div class="sub-panel" id="room-reach">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 02 / by reach</div>
+          <div class="sp-eyebrow">// by reach</div>
           <h3>Sorted by X followers.</h3>
         </div>
         <button class="sub-panel-close">close</button>
       </div>
-      <p style="color: var(--text-55); font-size: 13px; max-width: 540px; margin-bottom: 22px;">The megaphone matters. Big follower counts mean a single post moves rooms. The Hall surfaces both axes.</p>
+      <p style="color: var(--text-55); font-size: 13px; max-width: 540px; margin-bottom: 22px;">The megaphone matters. Big follower counts mean a single post moves rooms. The Hall of Fame surfaces both axes.</p>
       <div id="reach-list"></div>
     </div>
 
@@ -844,7 +855,7 @@
     <div class="sub-panel" id="room-tier">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 03 / the tier system</div>
+          <div class="sp-eyebrow">// the tier system</div>
           <h3>What A+ means.</h3>
         </div>
         <button class="sub-panel-close">close</button>
@@ -854,27 +865,27 @@
           <div class="lr">
             <div class="lr-letter aplus">A+</div>
             <div class="lr-name">Verified caller<span class="desc">Top tier. Earns the X badge. The cohort's standard-setter.</span></div>
-            <div class="lr-count">3 athletes</div>
+            <div class="lr-count">3 members</div>
           </div>
           <div class="lr">
             <div class="lr-letter a">A</div>
             <div class="lr-name">Active contributor<span class="desc">Strong recent performance. One push from verified.</span></div>
-            <div class="lr-count">8 athletes</div>
+            <div class="lr-count">8 members</div>
           </div>
           <div class="lr">
             <div class="lr-letter b">B</div>
             <div class="lr-name">Consistent operator<span class="desc">Reliable cadence, building a track record.</span></div>
-            <div class="lr-count">13 athletes</div>
+            <div class="lr-count">13 members</div>
           </div>
           <div class="lr">
             <div class="lr-letter c">C</div>
             <div class="lr-name">In the cohort<span class="desc">Earned the seat. Still climbing.</span></div>
-            <div class="lr-count">12 athletes</div>
+            <div class="lr-count">12 members</div>
           </div>
           <div class="lr">
             <div class="lr-letter d">D</div>
             <div class="lr-name">Recently inducted<span class="desc">Just joined. Score builds with current activity.</span></div>
-            <div class="lr-count">6 athletes</div>
+            <div class="lr-count">6 members</div>
           </div>
         </div>
         <div class="badge-callout">
@@ -892,26 +903,26 @@
     <div class="sub-panel" id="room-calls">
       <div class="sub-panel-head">
         <div class="titles">
-          <div class="sp-eyebrow">// 04 / top calls</div>
+          <div class="sp-eyebrow">// top calls</div>
           <h3>The receipts. Last 30 days.</h3>
         </div>
         <button class="sub-panel-close">close</button>
       </div>
-      <p style="color: var(--text-55); font-size: 13px; max-width: 540px; margin-bottom: 22px;">Top calls from the cohort. Stamped on the caller's profile. The Hall is what the work looks like in public.</p>
+      <p style="color: var(--text-55); font-size: 13px; max-width: 540px; margin-bottom: 22px;">Top calls from the cohort. Stamped on the caller's profile. The Hall of Fame is what the work looks like in public.</p>
       <div id="calls-list"></div>
     </div>
   </section>
 
   <!-- 03 / About -->
-  <div class="section-divider" id="about-anchor">// 03 / about the inner circle</div>
+  <div class="section-divider" id="about-anchor">// about the inner circle</div>
   <section>
     <div class="about">
       <div class="about-grid">
         <div>
-          <h3>The Hall is not the mini app.</h3>
+          <h3>The Hall of Fame is not the mini app.</h3>
           <p>The mini app is where the Inner Circle works. A live feed of calls, scans, and tracked tokens from everyone you follow. Filter, snipe, follow, drill into profiles.</p>
-          <div class="vs-line">The Hall is what the rest of crypto sees. The top of the cohort, frozen weekly. Status, not actions.</div>
-          <p>Membership is decided upstream. The verified badge is reserved for A+. Money is for traders. Status is for the cohort.</p>
+          <div class="vs-line">The Hall of Fame is what the rest of crypto sees. The top of the cohort, frozen weekly. Status, not actions.</div>
+          <p>The verified badge is reserved for A+. Money is for traders. Status is for the cohort.</p>
         </div>
         <div>
           <ul>
@@ -923,48 +934,31 @@
             <li>Chain tagging <span class="muted">primary expertise visible</span></li>
           </ul>
         </div>
+        <div class="about-wayin">
+          Membership is earned upstream.
+          <a href="https://t.me/altcoinist_bot" target="_blank" rel="noopener">How to get into the Circle →</a>
+        </div>
       </div>
     </div>
   </section>
 
   <footer class="brand-footer">
-    <div>// altcoinist · the hall · v2 mock</div>
-    <div>2026-05-28</div>
+    <div>// altcoinist · the hall of fame</div>
+    <div>2026</div>
   </footer>
 </div>
 
 <script>
   // === DATA ===
-  // Real handles from leaderboard-data.json + mock new-feature data.
-  // Sorted by repScore (high → low) per the new activity-based ranking.
-  const athletes = [
-    { handle: '@rbthreek',       avatar: 'avatars/rbthreek.jpg',       chain: 'sol',  repTier: 'A+', repScore: 87, repPeak: 94, vol: '$12.4M', followers: '128K' },
-    { handle: '@chironchain',    avatar: 'avatars/chironchain.jpg',    chain: 'eth',  repTier: 'A+', repScore: 84, repPeak: 89, vol: '$2.1M',  followers: '64K'  },
-    { handle: '@KAPOTHEGOAT01',  avatar: 'avatars/KAPOTHEGOAT01.jpg',  chain: 'sol',  repTier: 'A+', repScore: 81, repPeak: 88, vol: '$1.6M',  followers: '92K'  },
-    { handle: '@Chainriffs',     avatar: 'avatars/Chainriffs.jpg',     chain: 'base', repTier: 'A',  repScore: 76, repPeak: 81, vol: '$1.1M',  followers: '38K'  },
-    { handle: '@mrLCguy',        avatar: 'avatars/mrLCguy.jpg',        chain: 'eth',  repTier: 'A',  repScore: 72, repPeak: 78, vol: '$680K',  followers: '24K'  },
-    { handle: '@deepseektetra',  avatar: 'avatars/deepseektetra.jpg',  chain: 'sol',  repTier: 'A',  repScore: 68, repPeak: 74, vol: '$540K',  followers: '19K'  },
-    { handle: '@N30_cryptoo',    avatar: 'avatars/N30_cryptoo.jpg',    chain: 'sui',  repTier: 'B',  repScore: 64, repPeak: 69, vol: '$410K',  followers: '31K'  },
-    { handle: '@thebasedfrogx',  avatar: 'avatars/thebasedfrogx.jpg',  chain: 'base', repTier: 'B',  repScore: 61, repPeak: 66, vol: '$380K',  followers: '47K'  },
-    { handle: '@Vanxyrus',       avatar: 'avatars/Vanxyrus.jpg',       chain: 'eth',  repTier: 'B',  repScore: 58, repPeak: 64, vol: '$290K',  followers: '12K'  },
-    // Out-of-wall (used in sub-panels)
-    { handle: '@cryptic_tits',   avatar: 'avatars/cryptic_tits.png',   chain: 'sol',  repTier: 'C',  repScore: 52, repPeak: 58, vol: '$240K',  followers: '21K'  },
-    { handle: '@Neolawyer1',     avatar: 'avatars/Neolawyer1.jpg',     chain: 'eth',  repTier: 'C',  repScore: 48, repPeak: 54, vol: '$180K',  followers: '8.2K' },
-    { handle: '@KD11201',        avatar: 'avatars/KD11201.jpg',        chain: 'sui',  repTier: 'D',  repScore: 38, repPeak: 44, vol: '$140K',  followers: '5.6K' }
-  ];
-
-  const calls = [
-    { chain: 'sol',  ticker: '$BONK',  caller: '@rbthreek',       entry: '$0.000018',  pnl:  248, time: '5d'  },
-    { chain: 'eth',  ticker: '$PEPE',  caller: '@chironchain',    entry: '$0.0000091', pnl:   62, time: '6d'  },
-    { chain: 'sol',  ticker: '$WIF',   caller: '@KAPOTHEGOAT01',  entry: '$1.84',      pnl:   39, time: '8d'  },
-    { chain: 'base', ticker: '$DEGEN', caller: '@thebasedfrogx',  entry: '$0.012',     pnl:  -14, time: '11d' },
-    { chain: 'eth',  ticker: '$LDO',   caller: '@mrLCguy',        entry: '$1.42',      pnl:   22, time: '13d' },
-    { chain: 'sol',  ticker: '$JUP',   caller: '@deepseektetra',  entry: '$0.78',      pnl:   54, time: '15d' },
-    { chain: 'sui',  ticker: '$SUI',   caller: '@N30_cryptoo',    entry: '$1.12',      pnl:   31, time: '18d' },
-    { chain: 'base', ticker: '$AERO',  caller: '@Chainriffs',     entry: '$0.94',      pnl:   18, time: '22d' }
-  ];
-
+  // Data lives in hall-data.json (loaded async on boot).
+  // chainLabel stays inline — it's a UI label map, not data.
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+
+  async function loadData() {
+    const res = await fetch('hall-data.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
+    return res.json();
+  }
 
   // === RENDERERS ===
   function avatarMarkup(a, opts) {
@@ -996,16 +990,7 @@
           <div class="ath-tier-letter ${tc}">${a.repTier}</div>
           <div class="ath-tier-meta">current <span class="brand">${a.repScore}</span> · peak ${a.repPeak}</div>
         </div>
-        <div class="ath-receipts">
-          <div>
-            <div class="ath-r-label">volume</div>
-            <div class="ath-r-value">${a.vol}</div>
-          </div>
-          <div>
-            <div class="ath-r-label">followers</div>
-            <div class="ath-r-value">${a.followers}</div>
-          </div>
-        </div>
+        <div class="ath-receipts">${a.vol} vol · ${a.followers} flw</div>
       </a>`;
   }
 
@@ -1038,74 +1023,94 @@
       </div>`;
   }
 
-  // === INITIAL RENDER ===
-  // Wall = top 9 by repScore
-  const top9 = [...athletes].sort((a, b) => b.repScore - a.repScore).slice(0, 9);
-  document.getElementById('wall').innerHTML = top9.map(athleteCard).join('');
+  // renderChainList is defined inside the IIFE so it can close over `athletes`.
+  // === BOOTSTRAP ===
+  (async () => {
+    try {
+      const data = await loadData();
+      const athletes = data.athletes;
+      const calls = data.calls;
 
-  // Chain list (default = all)
-  function renderChainList(chain) {
-    const list = (chain === 'all' ? [...athletes] : athletes.filter(a => a.chain === chain))
-      .sort((a, b) => b.repScore - a.repScore)
-      .slice(0, 8);
-    document.getElementById('chain-list').innerHTML = list.length
-      ? list.map(a => miniRow(a)).join('')
-      : `<p style="color: var(--text-55); font-size: 13px; font-family: 'JetBrains Mono', monospace;">No athletes on this chain yet.</p>`;
-  }
-  renderChainList('all');
-
-  // Reach list = sorted by followers
-  const byReach = [...athletes].sort((a, b) => {
-    const fa = parseFloat(a.followers); const fb = parseFloat(b.followers);
-    return fb - fa;
-  }).slice(0, 8);
-  document.getElementById('reach-list').innerHTML = byReach.map(a => miniRow(a, { show: 'followers' })).join('');
-
-  // Calls list
-  document.getElementById('calls-list').innerHTML = calls.map(callRow).join('');
-
-  // === INTERACTIONS ===
-  // Room cards open sub-panels
-  document.querySelectorAll('[data-room]').forEach(card => {
-    card.addEventListener('click', () => {
-      const room = card.dataset.room;
-      const panel = document.getElementById('room-' + room);
-      const isOpen = panel.classList.contains('open');
-      document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('open'));
-      document.querySelectorAll('.room-card').forEach(c => c.classList.remove('is-open'));
-      if (!isOpen) {
-        panel.classList.add('open');
-        card.classList.add('is-open');
-        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      // Update hero stats from data.meta
+      const heroStats = document.querySelectorAll('.hero-stats > div .value');
+      if (heroStats[0]) heroStats[0].textContent = data.meta.verifiedAplusCount;
+      if (heroStats[1]) heroStats[1].textContent = data.meta.cohortSize;
+      if (heroStats[2]) {
+        heroStats[2].innerHTML = data.meta.lastRefresh + '<span class="sm"> · ' + data.meta.lastRefreshLabel + '</span>';
       }
-    });
-  });
 
-  // Close buttons
-  document.querySelectorAll('.sub-panel-close').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const panel = btn.closest('.sub-panel');
-      const roomId = panel.id.replace('room-', '');
-      panel.classList.remove('open');
-      const card = document.querySelector(`[data-room="${roomId}"]`);
-      if (card) card.classList.remove('is-open');
-    });
-  });
+      // === INITIAL RENDER ===
+      // Wall = top 9 by repScore
+      const top9 = [...athletes].sort((a, b) => b.repScore - a.repScore).slice(0, 9);
+      document.getElementById('wall').innerHTML = top9.map(athleteCard).join('');
 
-  // Chain chips inside the chain room
-  document.querySelectorAll('[data-chain]').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('[data-chain]').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      renderChainList(chip.dataset.chain);
-    });
-  });
+      // Chain list (default = all)
+      function renderChainList(chain) {
+        const list = (chain === 'all' ? [...athletes] : athletes.filter(a => a.chain === chain))
+          .sort((a, b) => b.repScore - a.repScore)
+          .slice(0, 8);
+        document.getElementById('chain-list').innerHTML = list.length
+          ? list.map(a => miniRow(a)).join('')
+          : `<p style="color: var(--text-55); font-size: 13px; font-family: 'JetBrains Mono', monospace;">No members on this chain yet.</p>`;
+      }
+      renderChainList('all');
 
-  // Nav: about anchor scroll
-  document.getElementById('nav-about').addEventListener('click', () => {
-    document.getElementById('about-anchor').scrollIntoView({ behavior: 'smooth' });
-  });
+      // Reach list = sorted by followers
+      const byReach = [...athletes].sort((a, b) => {
+        const fa = parseFloat(a.followers); const fb = parseFloat(b.followers);
+        return fb - fa;
+      }).slice(0, 8);
+      document.getElementById('reach-list').innerHTML = byReach.map(a => miniRow(a, { show: 'followers' })).join('');
+
+      // Calls list
+      document.getElementById('calls-list').innerHTML = calls.map(callRow).join('');
+
+      // === INTERACTIONS ===
+      // Room cards open sub-panels
+      document.querySelectorAll('[data-room]').forEach(card => {
+        card.addEventListener('click', () => {
+          const room = card.dataset.room;
+          const panel = document.getElementById('room-' + room);
+          const isOpen = panel.classList.contains('open');
+          document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('open'));
+          document.querySelectorAll('.room-card').forEach(c => c.classList.remove('is-open'));
+          if (!isOpen) {
+            panel.classList.add('open');
+            card.classList.add('is-open');
+            setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+          }
+        });
+      });
+
+      // Close buttons
+      document.querySelectorAll('.sub-panel-close').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const panel = btn.closest('.sub-panel');
+          const roomId = panel.id.replace('room-', '');
+          panel.classList.remove('open');
+          const card = document.querySelector(`[data-room="${roomId}"]`);
+          if (card) card.classList.remove('is-open');
+        });
+      });
+
+      // Chain chips inside the chain room
+      document.querySelectorAll('[data-chain]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('[data-chain]').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          renderChainList(chip.dataset.chain);
+        });
+      });
+
+      // Nav: about anchor scroll
+      document.getElementById('nav-about').addEventListener('click', () => {
+        document.getElementById('about-anchor').scrollIntoView({ behavior: 'smooth' });
+      });
+    } catch (e) {
+      console.error('Hall data load failed:', e);
+    }
+  })();
 </script>
 
 </body>

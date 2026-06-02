@@ -27,6 +27,9 @@ build/
 
 *.backup
 
+# Local design screenshots (not deployed, not versioned)
+design-refs/
+
 # Debug output
 leaderboard-data-output.json
 TEST-LOCAL.html
