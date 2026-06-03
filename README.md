@@ -4,11 +4,15 @@ Public-facing leaderboard showcasing top-performing Altcoinist affiliates.
 
 ## 🚀 Deployment
 
-**Live Site:** https://chichi-png.github.io/altcoinist-leaderboard/
+**Repository:** https://github.com/chichi-png/hall-of-fame
 
-**Repository:** https://github.com/chichi-png/altcoinist-leaderboard
+Deployed automatically via **Vercel** from the `master` branch. Routing is defined in `vercel.json` (clean URLs, rewrites, redirects). Set / confirm the production domain in the Vercel dashboard.
 
-Deployed automatically via **GitHub Pages** from the `master` branch.
+**Routes:**
+- `/` and `/hall-of-fame` — the Hall of Fame (ranked wall + rooms)
+- `/cohort` — full ranked roster
+- `/c/{handle}` — individual member profile (Share-on-X surface)
+- `/leaderboard` — permanent redirect to `/hall-of-fame` (legacy)
 
 ## 📁 Structure
 

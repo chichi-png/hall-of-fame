@@ -245,6 +245,9 @@
     return handle.replace('@', '');
   }
 
+  // Root-absolute asset path so avatars resolve regardless of the page's URL depth.
+  function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
+
   function cohortRow(a, rank) {
     const tc = tierClass(a.repTier);
     const isAplus = a.repTier === 'A+' ? ' is-aplus' : '';
@@ -253,7 +256,7 @@
       <a class="c-row${isAplus} rank-${rank}" href="/c/${handleSlug(a.handle)}">
         <div class="r-num">${rank}</div>
         <div class="r-avatar-wrap">
-          <img class="r-avatar" src="${a.avatar}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
+          <img class="r-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
         </div>
         <div class="r-id">
           <div class="r-handle">${a.handle}</div>
@@ -268,7 +271,7 @@
 
   (async () => {
     try {
-      const res = await fetch('hall-data.json', { cache: 'no-store' });
+      const res = await fetch('/hall-data.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
       const ranked = [...data.athletes].sort((a, b) => b.repScore - a.repScore);

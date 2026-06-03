@@ -267,6 +267,9 @@
     return { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' }[tier] || 'b';
   }
 
+  // Root-absolute asset path — this page is served at /c/{handle}, so relative paths would break.
+  function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
+
   // Handle comes from the path (/c/handle) or ?h= for local testing.
   function getHandleSlug() {
     const fromQuery = new URLSearchParams(location.search).get('h');
@@ -307,7 +310,7 @@
 
     const avatar = `
       <div class="p-avatar-wrap ${verified ? 'verified' : ''}">
-        <img class="p-avatar" src="${a.avatar}" alt="" onerror="this.outerHTML='<div class=\\'p-avatar-fallback\\'>${initials}</div>'"/>
+        <img class="p-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'p-avatar-fallback\\'>${initials}</div>'"/>
         ${verified ? '<div class="p-check">&#10003;</div>' : ''}
       </div>`;
 
@@ -359,7 +362,7 @@
   (async () => {
     const slug = getHandleSlug();
     try {
-      const res = await fetch('hall-data.json', { cache: 'no-store' });
+      const res = await fetch('/hall-data.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
       const ranked = [...data.athletes].sort((a, b) => b.repScore - a.repScore);
