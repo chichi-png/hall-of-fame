@@ -9,8 +9,24 @@
       "destination": "/hall-of-fame.html"
     },
     {
-      "source": "/cohort",
-      "destination": "/cohort.html"
+      "source": "/rankings",
+      "destination": "/rankings.html"
+    },
+    {
+      "source": "/chains",
+      "destination": "/chains.html"
+    },
+    {
+      "source": "/reach",
+      "destination": "/reach.html"
+    },
+    {
+      "source": "/calls",
+      "destination": "/calls.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
     },
     {
       "source": "/c/:handle",
@@ -21,6 +37,21 @@
     {
       "source": "/leaderboard",
       "destination": "/hall-of-fame",
+      "permanent": true
+    },
+    {
+      "source": "/cohort",
+      "destination": "/rankings",
+      "permanent": true
+    },
+    {
+      "source": "/tiers",
+      "destination": "/rankings",
+      "permanent": true
+    },
+    {
+      "source": "/receipts",
+      "destination": "/calls",
       "permanent": true
     }
   ],

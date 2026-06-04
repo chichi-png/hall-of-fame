@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calls — Altcoinist Inner Circle</title>
+
+<meta property="og:title" content="Calls — Altcoinist Inner Circle" />
+<meta property="og:description" content="The best winning calls from the cohort. Last 30 days. No screenshots." />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/hall.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="nav">
+    <a class="nav-brand" href="/">altcoinist<span class="dot">.</span> the hall of fame</a>
+    <div class="nav-links">
+      <a class="nav-link" href="/rankings">Rankings</a>
+      <a class="nav-link" href="/chains">Chains</a>
+      <a class="nav-link" href="/reach">Reach</a>
+      <a class="nav-link active" href="/calls">Calls</a>
+      <a class="nav-link" href="/about">About</a>
+    </div>
+  </nav>
+
+  <header class="page-head">
+    <div class="eyebrow">// the inner circle <span class="preview-tag">exclusive</span></div>
+    <h1>Calls.</h1>
+    <p>The best winning calls from the cohort, last 30 days. Stamped on the caller's profile. No screenshots, no edits.</p>
+  </header>
+
+  <section style="margin-top: 28px;">
+    <div id="calls-list"></div>
+  </section>
+
+  <footer class="brand-footer">
+    <div>// altcoinist · calls · exclusive</div>
+    <a href="/">the hall of fame &rarr;</a>
+  </footer>
+</div>
+
+<script>
+  const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+
+  function callRow(c) {
+    return `
+      <div class="call-row">
+        <span class="chain-pill">${chainLabel[c.chain]}</span>
+        <div>
+          <div class="call-ticker">${c.ticker}</div>
+          <div class="call-caller">${c.caller} · entry ${c.entry}</div>
+        </div>
+        <div class="call-pnl ${c.pnl >= 0 ? 'win' : 'loss'}">${c.pnl >= 0 ? '+' : ''}${c.pnl}%</div>
+        <div class="call-time">${c.time}</div>
+      </div>`;
+  }
+
+  (async () => {
+    try {
+      const res = await fetch('/hall-data.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
+      const data = await res.json();
+      const winning = (data.calls || []).filter(c => c.pnl >= 0).sort((a, b) => b.pnl - a.pnl);
+      document.getElementById('calls-list').innerHTML = winning.length
+        ? winning.map(callRow).join('')
+        : `<p class="calls-empty">No winning calls logged in the last 30 days.</p>`;
+    } catch (e) {
+      console.error('Calls data load failed:', e);
+      document.getElementById('calls-list').innerHTML = '<p class="calls-empty">Call data unavailable.</p>';
+    }
+  })();
+</script>
+
+</body>
+</html>

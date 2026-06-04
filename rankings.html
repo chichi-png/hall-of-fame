@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rankings — Altcoinist Inner Circle</title>
+
+<meta property="og:title" content="Rankings — Altcoinist Inner Circle" />
+<meta property="og:description" content="The full cohort, ranked by rep score. All-time, weekly, monthly." />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/hall.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="nav">
+    <a class="nav-brand" href="/">altcoinist<span class="dot">.</span> the hall of fame</a>
+    <div class="nav-links">
+      <a class="nav-link active" href="/rankings">Rankings</a>
+      <a class="nav-link" href="/chains">Chains</a>
+      <a class="nav-link" href="/reach">Reach</a>
+      <a class="nav-link" href="/calls">Calls</a>
+      <a class="nav-link" href="/about">About</a>
+    </div>
+  </nav>
+
+  <header class="page-head">
+    <div class="eyebrow">// the inner circle <span class="preview-tag">exclusive</span></div>
+    <h1>Rankings.</h1>
+    <p>The full cohort, ranked by rep score. Score decays over time, so the ranking rewards current work. Switch the window and the view.</p>
+  </header>
+
+  <section style="margin-top: 28px;">
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <span class="toolbar-label">window</span>
+        <div class="chip-set">
+          <button class="chip active" data-time="all">All-time</button>
+          <button class="chip" data-time="weekly">Weekly</button>
+          <button class="chip" data-time="monthly">Monthly</button>
+        </div>
+      </div>
+      <div class="toolbar-group">
+        <span class="toolbar-label">view</span>
+        <div class="chip-set">
+          <button class="chip active" data-view="cards">Cards</button>
+          <button class="chip" data-view="table">Table</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="rankings-content"></div>
+  </section>
+
+  <!-- The tiers — what the rank letter means -->
+  <div class="section-divider">// the tiers</div>
+  <section>
+    <h2 class="section-heading">What the letter means.</h2>
+    <p class="section-sub">Rep score maps to a tier. A+ is the standard-setter, and the only tier that earns the verified badge.</p>
+    <div class="ladder">
+      <div class="ladder-rows">
+        <div class="lr">
+          <div class="lr-letter aplus">A+</div>
+          <div class="lr-name">Verified caller<span class="desc">Top tier. Earns the X badge. The cohort's standard-setter.</span></div>
+          <div class="lr-count">3 members</div>
+        </div>
+        <div class="lr">
+          <div class="lr-letter a">A</div>
+          <div class="lr-name">Active contributor<span class="desc">Strong recent performance. One push from verified.</span></div>
+          <div class="lr-count">8 members</div>
+        </div>
+        <div class="lr">
+          <div class="lr-letter b">B</div>
+          <div class="lr-name">Consistent operator<span class="desc">Reliable cadence, building a track record.</span></div>
+          <div class="lr-count">13 members</div>
+        </div>
+        <div class="lr">
+          <div class="lr-letter c">C</div>
+          <div class="lr-name">In the cohort<span class="desc">Earned the seat. Still climbing.</span></div>
+          <div class="lr-count">12 members</div>
+        </div>
+        <div class="lr">
+          <div class="lr-letter d">D</div>
+          <div class="lr-name">Recently inducted<span class="desc">Just joined. Score builds with current activity.</span></div>
+          <div class="lr-count">6 members</div>
+        </div>
+      </div>
+      <div class="badge-callout">
+        <div class="demo-pfp">
+          <img src="/avatars/rbthreek.jpg" alt="verified pfp" />
+          <div class="demo-check">✓</div>
+        </div>
+        <h5>The Verified Badge.</h5>
+        <p>A+ unlocks the verified ring on the Altcoinist profile. The same badge mirrors on X. The brand and the caller compound together.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="brand-footer">
+    <div>// altcoinist · rankings · exclusive</div>
+    <a href="/">the hall of fame &rarr;</a>
+  </footer>
+</div>
+
+<script>
+  const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+  function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
+  function tierClass(tier) { return { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' }[tier] || 'b'; }
+
+  const SCORE_FIELD = { all: 'repScore', weekly: 'repWeekly', monthly: 'repMonthly' };
+  const state = { time: 'all', view: 'cards' };
+  let ATHLETES = [];
+
+  function scoreOf(a) { return a[SCORE_FIELD[state.time]] ?? a.repScore; }
+
+  function avatarMarkup(a) {
+    const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
+    const verified = a.repTier === 'A+';
+    return `
+      <div class="ath-avatar-wrap">
+        <img class="ath-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'ath-avatar-fallback\\'>${initials}</div>'"/>
+        ${verified ? '<div class="verified-check">✓</div>' : ''}
+      </div>`;
+  }
+
+  function athleteCard(a, rank) {
+    const tc = tierClass(a.repTier);
+    return `
+      <a class="athlete tier-${tc} rank-${rank}" href="/c/${a.handle.replace('@', '')}">
+        <div class="ath-rank">#${rank}</div>
+        <div class="ath-head">
+          ${avatarMarkup(a)}
+          <div class="ath-meta">
+            <div class="ath-handle">${a.handle}</div>
+            <div class="ath-sub">${chainLabel[a.chain]}</div>
+          </div>
+        </div>
+        <div class="ath-tier-block">
+          <div class="ath-tier-letter ${tc}">${a.repTier}</div>
+          <div class="ath-tier-meta">score <span class="brand">${scoreOf(a)}</span> · peak ${a.repPeak}</div>
+        </div>
+        <div class="ath-stats">
+          <div class="ath-stat"><div class="v">${a.vol}</div><div class="l">volume</div></div>
+          <div class="ath-stat"><div class="v">${a.followers}</div><div class="l">followers</div></div>
+        </div>
+      </a>`;
+  }
+
+  function tableRow(a, rank) {
+    const tc = tierClass(a.repTier);
+    const isAplus = a.repTier === 'A+' ? ' is-aplus' : '';
+    const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
+    return `
+      <a class="c-row${isAplus} rank-${rank}" href="/c/${a.handle.replace('@', '')}">
+        <div class="r-num">${rank}</div>
+        <div class="r-avatar-wrap">
+          <img class="r-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
+        </div>
+        <div class="r-id">
+          <div class="r-handle">${a.handle}</div>
+          <div class="r-chain">${chainLabel[a.chain]}</div>
+        </div>
+        <div class="r-tier ${tc}">${a.repTier}</div>
+        <div class="r-score">${scoreOf(a)}</div>
+        <div class="r-vol">${a.vol}</div>
+        <div class="r-flw">${a.followers}</div>
+      </a>`;
+  }
+
+  function render() {
+    const ranked = [...ATHLETES].sort((a, b) => scoreOf(b) - scoreOf(a));
+    const root = document.getElementById('rankings-content');
+    if (state.view === 'cards') {
+      root.innerHTML = '<div class="wall">' + ranked.map((a, i) => athleteCard(a, i + 1)).join('') + '</div>';
+    } else {
+      root.innerHTML = `
+        <div class="list">
+          <div class="list-head">
+            <div class="r-num">#</div>
+            <div></div>
+            <div>Member</div>
+            <div class="r-tier">Tier</div>
+            <div class="r-score">Score</div>
+            <div class="r-vol">Volume</div>
+            <div class="r-flw">Followers</div>
+          </div>
+          ${ranked.map((a, i) => tableRow(a, i + 1)).join('')}
+        </div>`;
+    }
+  }
+
+  (async () => {
+    try {
+      const res = await fetch('/hall-data.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
+      const data = await res.json();
+      ATHLETES = data.athletes;
+      render();
+
+      document.querySelectorAll('[data-time]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('[data-time]').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          state.time = chip.dataset.time;
+          render();
+        });
+      });
+      document.querySelectorAll('[data-view]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('[data-view]').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          state.view = chip.dataset.view;
+          render();
+        });
+      });
+    } catch (e) {
+      console.error('Rankings data load failed:', e);
+      document.getElementById('rankings-content').innerHTML = '<p class="list-note">Cohort data unavailable.</p>';
+    }
+  })();
+</script>
+
+</body>
+</html>
