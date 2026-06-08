@@ -1085,3 +1085,63 @@ footer.brand-footer {
 }
 footer.brand-footer a { color: var(--text-30); text-decoration: none; transition: color 200ms; }
 footer.brand-footer a:hover { color: var(--brand); }
+
+/* ============================================================
+   MOBILE + TOUCH
+   :hover doesn't fire on touch, so every tappable surface also
+   gets an :active state. Nav stacks, tap targets grow.
+   ============================================================ */
+
+/* --- Touch feedback (mirrors hover, fires on tap) --- */
+.athlete:active,
+.room-card:active,
+.podium-card:active {
+  border-color: var(--brand-30);
+  box-shadow: var(--glow-card);
+}
+.mini-row:active,
+.c-row:active { background: var(--card-bg); }
+.chip:active,
+.nav-link:active,
+.wall-more:active { color: var(--brand); border-color: var(--brand-30); }
+.share-btn:active { transform: translateY(0) scale(0.98); }
+
+/* --- Calls row: reflow on narrow screens (used on /calls + every profile) --- */
+@media (max-width: 560px) {
+  .call-row {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "pill main pnl"
+      "pill main time";
+    gap: 2px 12px;
+    align-items: center;
+  }
+  .call-row > .chain-pill { grid-area: pill; align-self: center; }
+  .call-row > div:nth-child(2) { grid-area: main; min-width: 0; }
+  .call-row > .call-pnl { grid-area: pnl; align-self: end; }
+  .call-row > .call-time { grid-area: time; align-self: start; }
+  .call-caller, .call-entry { white-space: normal; word-break: break-word; }
+}
+
+/* --- Nav: stack + grow tap targets on mobile --- */
+@media (max-width: 620px) {
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px 0;
+  }
+  .nav-links {
+    width: 100%;
+    gap: 10px 20px;
+  }
+  .nav-link {
+    font-size: 11px;
+    padding: 6px 0;            /* taller tap target */
+  }
+  .chip {
+    padding: 10px 16px;        /* ~44px tappable height */
+    font-size: 11px;
+  }
+  .toolbar { gap: 14px 24px; }
+}
