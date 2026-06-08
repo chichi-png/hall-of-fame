@@ -16,7 +16,7 @@
     { "handle": "@N30_cryptoo",    "avatar": "avatars/N30_cryptoo.jpg",    "chain": "sui",  "repTier": "B",  "repScore": 64, "repWeekly": 70, "repMonthly": 66, "repPeak": 69, "vol": "$410K",  "followers": "31K"  },
     { "handle": "@thebasedfrogx",  "avatar": "avatars/thebasedfrogx.jpg",  "chain": "base", "repTier": "B",  "repScore": 61, "repWeekly": 58, "repMonthly": 60, "repPeak": 66, "vol": "$380K",  "followers": "47K"  },
     { "handle": "@Vanxyrus",       "avatar": "avatars/Vanxyrus.jpg",       "chain": "eth",  "repTier": "B",  "repScore": 58, "repWeekly": 63, "repMonthly": 60, "repPeak": 64, "vol": "$290K",  "followers": "12K"  },
-    { "handle": "@cryptic_tits",   "avatar": "avatars/cryptic_tits.png",   "chain": "sol",  "repTier": "C",  "repScore": 52, "repWeekly": 49, "repMonthly": 51, "repPeak": 58, "vol": "$240K",  "followers": "21K"  },
+    { "handle": "@cryptic_tits",   "avatar": "avatars/cryptic_tits.jpg",   "chain": "sol",  "repTier": "C",  "repScore": 52, "repWeekly": 49, "repMonthly": 51, "repPeak": 58, "vol": "$240K",  "followers": "21K"  },
     { "handle": "@Neolawyer1",     "avatar": "avatars/Neolawyer1.jpg",     "chain": "eth",  "repTier": "C",  "repScore": 48, "repWeekly": 54, "repMonthly": 50, "repPeak": 54, "vol": "$180K",  "followers": "8.2K" },
     { "handle": "@KD11201",        "avatar": "avatars/KD11201.jpg",        "chain": "sui",  "repTier": "D",  "repScore": 38, "repWeekly": 44, "repMonthly": 41, "repPeak": 44, "vol": "$140K",  "followers": "5.6K" }
   ],
