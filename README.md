@@ -30,7 +30,7 @@ Routing (clean URLs, rewrites, redirects) is in `vercel.json`.
 
 ```
 hall-of-fame/
-├── hall-of-fame.html      # landing (/)
+├── index.html             # landing (/)
 ├── rankings.html chains.html reach.html calls.html about.html
 ├── profile.html           # dynamic /c/{handle} fallback (client-renders from hall-data.json)
 ├── c/{handle}.html        # pre-generated per-member pages (baked-in og: tags) — see below

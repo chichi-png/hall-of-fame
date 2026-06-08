@@ -1,14 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/hall-of-fame.html"
-    },
-    {
-      "source": "/hall-of-fame",
-      "destination": "/hall-of-fame.html"
-    },
-    {
       "source": "/rankings",
       "destination": "/rankings.html"
     },
@@ -35,8 +27,13 @@
   ],
   "redirects": [
     {
+      "source": "/hall-of-fame",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/leaderboard",
-      "destination": "/hall-of-fame",
+      "destination": "/",
       "permanent": true
     },
     {
