@@ -70,26 +70,35 @@
 
 <script>
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+  const tierSlug = { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' };
   function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
 
-  function podiumCard(a, rank) {
-    const pos = rank;
+  function podiumCard(a, rank, tierColors) {
     const featured = rank === 1 ? ' featured' : '';
     const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
+    const c = (tierColors && tierColors[a.repTier]) || '#39F590';
+    const slug = tierSlug[a.repTier] || 'd';
+    const art = a.character ? `assets/tier-cards/${a.character}/${slug}.png` : '';
+    const check = a.repTier === 'A+' ? '<div class="podium-check">✓</div>' : '';
     return `
-      <a class="podium-card pos-${pos}${featured}" href="/c/${a.handle.replace('@', '')}">
-        <div class="podium-rank">#${rank}</div>
-        <div class="podium-avatar-wrap">
-          <img class="podium-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'ath-avatar-fallback\\' style=\\'width:100%;height:100%;\\'>${initials}</div>'"/>
-          <div class="podium-check">✓</div>
+      <a class="podium-card pos-${rank}${featured}" style="--c:${c}" href="/c/${a.handle.replace('@', '')}">
+        <div class="podium-art-wrap">
+          <img class="podium-art" src="${asset(art)}" alt="${a.handle} — ${a.repTier} ${a.character || ''}" loading="lazy"/>
+          <div class="podium-tierbadge">${a.repTier}</div>
+          <div class="podium-rank">#${rank}</div>
         </div>
-        <div class="podium-handle">${a.handle}</div>
-        <div class="podium-chain">${chainLabel[a.chain]}</div>
-        <div class="podium-tier">${a.repTier}</div>
-        <div class="podium-score">score <span class="brand">${a.repScore}</span> · peak ${a.repPeak}</div>
-        <div class="podium-stats">
-          <div class="podium-stat"><div class="v">${a.vol}</div><div class="l">volume</div></div>
-          <div class="podium-stat"><div class="v">${a.followers}</div><div class="l">followers</div></div>
+        <div class="podium-pfp-wrap">
+          <img class="podium-pfp" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'podium-pfp-fallback\\'>${initials}</div>'"/>
+          ${check}
+        </div>
+        <div class="podium-body">
+          <div class="podium-handle">${a.handle}</div>
+          <div class="podium-chain">${chainLabel[a.chain]}</div>
+          <div class="podium-score">score <span class="brand">${a.repScore}</span> · peak ${a.repPeak}</div>
+          <div class="podium-stats">
+            <div class="podium-stat"><div class="v">${a.vol}</div><div class="l">volume</div></div>
+            <div class="podium-stat"><div class="v">${a.followers}</div><div class="l">followers</div></div>
+          </div>
         </div>
       </a>`;
   }
@@ -106,12 +115,13 @@
       if (heroStats[1]) heroStats[1].textContent = data.meta.cohortSize;
       if (heroStats[2]) heroStats[2].innerHTML = data.meta.lastRefresh + '<span class="sm"> · ' + data.meta.lastRefreshLabel + '</span>';
 
+      const tierColors = (data.meta && data.meta.tierColors) || {};
       const top3 = [...athletes].sort((a, b) => b.repScore - a.repScore).slice(0, 3);
       // DOM order for podium effect: #2 (left), #1 (center), #3 (right)
       const order = [top3[1], top3[0], top3[2]];
       const ranks = [2, 1, 3];
       document.getElementById('podium').innerHTML =
-        order.map((a, i) => a ? podiumCard(a, ranks[i]) : '').join('');
+        order.map((a, i) => a ? podiumCard(a, ranks[i], tierColors) : '').join('');
     } catch (e) {
       console.error('Hall data load failed:', e);
     }

@@ -39,8 +39,10 @@ hall-of-fame/
 ├── avatars/               # member profile pictures
 ├── assets/
 │   ├── og-hall.png        # generic share card (og:image for non-profile pages)
-│   └── cards/{handle}.png # per-member share cards
+│   ├── cards/{handle}.png # per-member share cards
+│   └── tier-cards/{character}/{tier}.png  # reputation character art (5 chars × 5 tiers)
 ├── generate-og-card.py    # regenerates all share cards + c/ pages from hall-data.json
+├── import-tier-cards.py   # imports + optimizes the 25 tier cards from Konsti's source folder
 └── vercel.json
 ```
 
@@ -52,9 +54,9 @@ hall-of-fame/
 {
   "meta": { "verifiedAplusCount": 3, "cohortSize": 42, "lastRefresh": "W22", ... },
   "athletes": [
-    { "handle": "@rbthreek", "avatar": "avatars/rbthreek.jpg", "chain": "sol",
-      "repTier": "A+", "repScore": 87, "repWeekly": 91, "repMonthly": 88, "repPeak": 94,
-      "vol": "$12.4M", "followers": "128K" }
+    { "handle": "@rbthreek", "avatar": "avatars/rbthreek.jpg", "character": "samurai",
+      "chain": "sol", "repTier": "A+", "repScore": 87, "repWeekly": 91, "repMonthly": 88,
+      "repPeak": 94, "vol": "$12.4M", "followers": "128K" }
   ],
   "calls": [ { "chain": "sol", "ticker": "$BONK", "caller": "@rbthreek", "entry": "...", "pnl": 248, "time": "5d" } ]
 }
@@ -91,9 +93,34 @@ Rebuilds `og-hall.png`, every `assets/cards/{handle}.png`, and every `c/{handle}
 
 ## Design
 
-Strict brand compliance: black canvas, single green accent (`#38FF93`), Inter for headings,
-JetBrains Mono for labels. A+ tier gets a verified ring + badge (mirrors the X badge). Edit
-design tokens once in `styles/hall.css` and every page updates.
+Black canvas, Inter for headings, JetBrains Mono for labels. A+ tier gets a verified ring +
+badge (mirrors the X badge). Edit design tokens once in `styles/hall.css` and every page updates.
+
+**Tier colors mirror the mini app** (locked — see `../../docs/reputation-tier-colors.md`):
+
+| Tier | Color | Hex |
+|---|---|---|
+| A+ Legendary | mint (brand green, A+ only) | `#39F590` |
+| A Elite | turquoise | `#2EE6D6` |
+| B Respected | royal blue | `#1E88FF` |
+| C Trusted | steel blue | `#6E9BFF` |
+| D Newcomer | pearl white | `#F5F5F7` |
+
+**Reputation character art.** The home spotlight (top-3 podium) renders each member's tier
+character as the focal image. 5 classes (hunter / mage / paladin / samurai / shaman) × 5 tiers,
+same character at every tier — only color + glow intensity change up the ladder. Each athlete's
+`character` field in `hall-data.json` picks the class; `repTier` picks the tier variant. The art
+is currently mock-assigned per member; the real class comes from the mini-app reputation system
+when it ships.
+
+**Importing tier cards** (when Konsti updates the source set):
+
+```bash
+python import-tier-cards.py "/path/to/Tier Cards characters"
+```
+
+Normalizes the inconsistent source filenames, resizes to web size, and writes
+`assets/tier-cards/{character}/{tier}.png`. Requires Pillow.
 
 ## Push (dual-push)
 
