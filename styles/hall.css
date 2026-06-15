@@ -224,6 +224,7 @@ html, body {
 .wall-more span { color: var(--text-30); }
 
 .athlete {
+  --c: var(--brand);
   position: relative;
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -357,7 +358,58 @@ html, body {
   text-transform: uppercase;
   color: var(--text-30);
 }
-.ath-tier-meta .brand { color: var(--brand-60); }
+.ath-tier-meta .brand { color: var(--c); }
+
+/* compact character portrait (rankings cards) — premium replacement
+   for the old flat tier letter. Tier color (--c) rings the art + the chip. */
+.ath-portrait {
+  position: relative;
+  width: 116px;
+  height: 116px;
+  margin: 4px auto 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1.5px solid var(--c);
+  box-shadow: 0 0 20px -5px var(--c);
+}
+.ath-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 400ms ease;
+}
+.athlete:hover .ath-portrait img,
+.athlete:active .ath-portrait img { transform: scale(1.06); }
+.ath-tier-chip {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--c);
+  background: rgba(0, 0, 0, 0.62);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 4px 9px;
+  backdrop-filter: blur(4px);
+}
+.ath-portrait-letter {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--c);
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(0,0,0,0.4));
+}
 
 .ath-stats {
   display: grid;
@@ -687,7 +739,7 @@ html, body {
   font-family: 'JetBrains Mono', monospace;
   font-size: 14px;
   font-weight: 600;
-  color: var(--brand);
+  color: var(--text);
 }
 .mini-tier {
   font-family: 'JetBrains Mono', monospace;
@@ -839,7 +891,7 @@ html, body {
   font-size: 16px;
   font-weight: 700;
 }
-.call-pnl.win { color: var(--brand); }
+.call-pnl.win { color: var(--tier-a); }   /* turquoise — gain, distinct from reserved brand green */
 .call-pnl.loss { color: rgba(255, 120, 120, 0.85); }
 .call-time {
   font-family: 'JetBrains Mono', monospace;

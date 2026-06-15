@@ -113,8 +113,10 @@
 
 <script>
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+  const TIER_COLORS = { 'A+': '#39F590', 'A': '#2EE6D6', 'B': '#1E88FF', 'C': '#6E9BFF', 'D': '#F5F5F7' };
   function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
   function tierClass(tier) { return { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' }[tier] || 'b'; }
+  function tierColor(tier) { return TIER_COLORS[tier] || '#39F590'; }
 
   const SCORE_FIELD = { all: 'repScore', weekly: 'repWeekly', monthly: 'repMonthly' };
   const state = { time: 'all', view: 'cards' };
@@ -134,8 +136,13 @@
 
   function athleteCard(a, rank) {
     const tc = tierClass(a.repTier);
+    const c = tierColor(a.repTier);
+    const art = a.character ? `assets/tier-cards/${a.character}/${tc}-thumb.png` : '';
+    const portrait = art
+      ? `<img src="${asset(art)}" alt="${a.handle} — ${a.repTier} ${a.character}" loading="lazy" onerror="this.outerHTML='<div class=\\'ath-portrait-letter\\'>${a.repTier}</div>'"/>`
+      : `<div class="ath-portrait-letter">${a.repTier}</div>`;
     return `
-      <a class="athlete tier-${tc} rank-${rank}" href="/c/${a.handle.replace('@', '')}">
+      <a class="athlete tier-${tc} rank-${rank}" style="--c:${c}" href="/c/${a.handle.replace('@', '')}">
         <div class="ath-rank">#${rank}</div>
         <div class="ath-head">
           ${avatarMarkup(a)}
@@ -145,7 +152,10 @@
           </div>
         </div>
         <div class="ath-tier-block">
-          <div class="ath-tier-letter ${tc}">${a.repTier}</div>
+          <div class="ath-portrait">
+            ${portrait}
+            <div class="ath-tier-chip">${a.repTier}</div>
+          </div>
           <div class="ath-tier-meta">score <span class="brand">${scoreOf(a)}</span> · peak ${a.repPeak}</div>
         </div>
         <div class="ath-stats">

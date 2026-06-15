@@ -15,7 +15,8 @@ import sys, os, re, glob
 from PIL import Image
 
 CHARACTERS = ["hunter", "mage", "paladin", "samurai", "shaman"]
-TARGET_PX = 760          # display ~340px; 760 covers retina
+TARGET_PX = 760          # spotlight art — display ~340px, 760 covers retina
+THUMB_PX = 320           # rankings compact card — display ~116px, 320 covers retina
 OUT_ROOT = os.path.join(os.path.dirname(__file__), "assets", "tier-cards")
 
 
@@ -59,12 +60,16 @@ def main():
             if tier not in found:
                 print(f"   !! {character} missing tier {tier}")
                 continue
-            im = Image.open(found[tier]).convert("RGB")
-            im = im.resize((TARGET_PX, TARGET_PX), Image.LANCZOS)
+            base = Image.open(found[tier]).convert("RGB")
+            # full-size spotlight art
             out = os.path.join(out_dir, f"{tier}.png")
-            im.save(out, "PNG", optimize=True)
+            base.resize((TARGET_PX, TARGET_PX), Image.LANCZOS).save(out, "PNG", optimize=True)
+            # lightweight thumbnail for the rankings compact cards
+            thumb = os.path.join(out_dir, f"{tier}-thumb.png")
+            base.resize((THUMB_PX, THUMB_PX), Image.LANCZOS).save(thumb, "PNG", optimize=True)
             kb = round(os.path.getsize(out) / 1024)
-            print(f"   {character}/{tier}.png  {kb}KB")
+            tkb = round(os.path.getsize(thumb) / 1024)
+            print(f"   {character}/{tier}.png  {kb}KB  (+thumb {tkb}KB)")
             total += 1
     print(f"\ndone — {total}/25 cards imported to {OUT_ROOT}")
 
