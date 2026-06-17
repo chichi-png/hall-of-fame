@@ -59,22 +59,26 @@
 <script>
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
   function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
-  function tierClass(tier) { return { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' }[tier] || 'b'; }
+
+  function rankSort(a, b) {
+    if (a.scored !== b.scored) return a.scored ? -1 : 1;
+    if (a.scored) return b.repScore - a.repScore;
+    return 0;
+  }
 
   function miniRow(a) {
-    const tc = tierClass(a.repTier);
-    const verified = a.repTier === 'A+';
     const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
+    const chain = chainLabel[a.chain] || 'in the circle';
     return `
-      <a class="mini-row" style="text-decoration:none;color:inherit;" href="/c/${a.handle.replace('@', '')}">
+      <a class="mini-row${a.scored ? '' : ' unscored'}" style="text-decoration:none;color:inherit;" href="/c/${a.handle.replace('@', '')}">
         <div class="mini-avatar-wrap">
-          <img class="mini-avatar${verified ? ' verified' : ''}" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
+          <img class="mini-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
         </div>
         <div class="mini-info">
           <div class="mini-handle">${a.handle}</div>
-          <div class="mini-meta">${chainLabel[a.chain]} · score ${a.repScore}</div>
+          <div class="mini-meta">${chain}</div>
         </div>
-        <div class="mini-tier ${tc}">${a.repTier}</div>
+        <div class="mini-stat">${a.scored ? a.repScore : '<span class="unscored-tag">unscored</span>'}</div>
       </a>`;
   }
 
@@ -87,7 +91,7 @@
 
       function render(chain) {
         const list = (chain === 'all' ? [...athletes] : athletes.filter(a => a.chain === chain))
-          .sort((a, b) => b.repScore - a.repScore);
+          .sort(rankSort);
         document.getElementById('chain-list').innerHTML = list.length
           ? list.map(miniRow).join('')
           : `<p class="list-note">No members on this chain yet.</p>`;

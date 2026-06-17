@@ -747,6 +747,15 @@ html, body {
   border-top: 1px solid var(--border);
 }
 .mini-row:first-of-type { border-top: none; }
+.mini-rank {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-30);
+  width: 26px; flex-shrink: 0; text-align: right;
+}
+.mini-row.unscored { opacity: 0.7; }
+.mini-row.unscored .mini-avatar { filter: grayscale(1); }
+.mini-row.unscored:hover { opacity: 1; }
 .mini-avatar-wrap { position: relative; width: 36px; height: 36px; flex-shrink: 0; }
 .mini-avatar {
   width: 36px; height: 36px;

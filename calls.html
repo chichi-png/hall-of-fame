@@ -36,7 +36,7 @@
   <header class="page-head">
     <div class="eyebrow">// the inner circle <span class="preview-tag">exclusive</span></div>
     <h1>Calls.</h1>
-    <p>The best winning calls from the circle, last 30 days. Stamped on the caller's profile. No screenshots, no edits.</p>
+    <p>The biggest winning calls from the circle, scored on-chain by peak move after the call. No screenshots, no edits.</p>
   </header>
 
   <section style="margin-top: 28px;">
@@ -55,13 +55,13 @@
   function callRow(c) {
     return `
       <div class="call-row">
-        <span class="chain-pill">${chainLabel[c.chain]}</span>
+        <span class="chain-pill">${chainLabel[c.chain] || ''}</span>
         <div>
           <div class="call-ticker">${c.ticker}</div>
-          <div class="call-caller">${c.caller} · entry ${c.entry}</div>
+          <div class="call-caller">${c.caller}</div>
         </div>
-        <div class="call-pnl ${c.pnl >= 0 ? 'win' : 'loss'}">${c.pnl >= 0 ? '+' : ''}${c.pnl}%</div>
-        <div class="call-time">${c.time}</div>
+        <div class="call-pnl win">${c.mult}x</div>
+        <div class="call-time">${c.date || ''}</div>
       </div>`;
   }
 
@@ -70,10 +70,10 @@
       const res = await fetch('/hall-data.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
-      const winning = (data.calls || []).filter(c => c.pnl >= 0).sort((a, b) => b.pnl - a.pnl);
+      const winning = (data.calls || []).slice().sort((a, b) => b.mult - a.mult);
       document.getElementById('calls-list').innerHTML = winning.length
         ? winning.map(callRow).join('')
-        : `<p class="calls-empty">No winning calls logged in the last 30 days.</p>`;
+        : `<p class="calls-empty">No winning calls logged yet.</p>`;
     } catch (e) {
       console.error('Calls data load failed:', e);
       document.getElementById('calls-list').innerHTML = '<p class="calls-empty">Call data unavailable.</p>';

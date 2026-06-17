@@ -52,26 +52,30 @@
 <script>
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
   function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
-  function tierClass(tier) { return { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' }[tier] || 'b'; }
 
-  function miniRow(a) {
-    const verified = a.repTier === 'A+';
+  function miniRow(a, rank) {
     const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
+    const chain = chainLabel[a.chain] || '';
+    const repBit = a.scored ? `rep ${a.repScore}` : 'unscored';
+    const meta = [chain, repBit].filter(Boolean).join(' · ');
     return `
-      <a class="mini-row" style="text-decoration:none;color:inherit;" href="/c/${a.handle.replace('@', '')}">
+      <a class="mini-row${a.scored ? '' : ' unscored'}" style="text-decoration:none;color:inherit;" href="/c/${a.handle.replace('@', '')}">
+        <div class="mini-rank">${rank}</div>
         <div class="mini-avatar-wrap">
-          <img class="mini-avatar${verified ? ' verified' : ''}" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
+          <img class="mini-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
         </div>
         <div class="mini-info">
           <div class="mini-handle">${a.handle}</div>
-          <div class="mini-meta">${chainLabel[a.chain]} · score ${a.repScore}</div>
+          <div class="mini-meta">${meta}</div>
         </div>
-        <div class="mini-stat">${a.followers}</div>
+        <div class="mini-stat">${a.followers || '—'}</div>
       </a>`;
   }
 
   function followerCount(f) {
+    if (!f) return -1;
     const n = parseFloat(f);
+    if (isNaN(n)) return -1;
     if (/M/i.test(f)) return n * 1e6;
     if (/K/i.test(f)) return n * 1e3;
     return n;
@@ -83,7 +87,7 @@
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
       const byReach = [...data.athletes].sort((a, b) => followerCount(b.followers) - followerCount(a.followers));
-      document.getElementById('reach-list').innerHTML = byReach.map(miniRow).join('');
+      document.getElementById('reach-list').innerHTML = byReach.map((a, i) => miniRow(a, i + 1)).join('');
     } catch (e) {
       console.error('Reach data load failed:', e);
       document.getElementById('reach-list').innerHTML = '<p class="list-note">Circle data unavailable.</p>';

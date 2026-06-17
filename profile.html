@@ -44,12 +44,14 @@
 <script>
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
 
-  function tierClass(tier) {
-    return { 'A+': 'aplus', 'A': 'a', 'B': 'b', 'C': 'c', 'D': 'd' }[tier] || 'b';
-  }
-
   // Root-absolute asset path — this page is served at /c/{handle}, so relative paths would break.
   function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
+
+  function rankSort(a, b) {
+    if (a.scored !== b.scored) return a.scored ? -1 : 1;
+    if (a.scored) return b.repScore - a.repScore;
+    return 0;
+  }
 
   // Handle comes from the path (/c/handle) or ?h= for local testing.
   function getHandleSlug() {
@@ -64,56 +66,61 @@
   function callRow(c) {
     return `
       <div class="call-row">
-        <span class="chain-pill">${chainLabel[c.chain]}</span>
+        <span class="chain-pill">${chainLabel[c.chain] || ''}</span>
         <div>
           <div class="call-ticker">${c.ticker}</div>
-          <div class="call-entry">entry ${c.entry}</div>
+          <div class="call-entry">${c.date || ''}</div>
         </div>
-        <div class="call-pnl ${c.pnl >= 0 ? 'win' : 'loss'}">${c.pnl >= 0 ? '+' : ''}${c.pnl}%</div>
-        <div class="call-time">${c.time}</div>
+        <div class="call-pnl win">${c.mult}x</div>
+        <div class="call-time"></div>
       </div>`;
   }
 
   function shareText(a, rank) {
-    if (a.repTier === 'A+') {
-      return `Verified A+ in the Altcoinist Inner Circle. Rep ${a.repScore}, ranked #${rank}. Reputation is the only flex.`;
+    if (a.scored) {
+      return `Ranked #${rank} in the Altcoinist Inner Circle. Rep ${a.repScore}, proven on-chain. Reputation is the only flex.`;
     }
-    return `Ranked #${rank} in the Altcoinist Inner Circle. Tier ${a.repTier}, rep ${a.repScore}.`;
+    return `In the Altcoinist Inner Circle. Reputation, not referrals.`;
   }
 
   function renderProfile(a, rank, calls) {
-    const tc = tierClass(a.repTier);
-    const verified = a.repTier === 'A+';
     const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
     const profileUrl = location.origin + '/c/' + a.handle.replace('@', '');
     const tweetUrl = 'https://twitter.com/intent/tweet?text=' +
       encodeURIComponent(shareText(a, rank)) + '&url=' + encodeURIComponent(profileUrl);
 
     const avatar = `
-      <div class="p-avatar-wrap ${verified ? 'verified' : ''}">
+      <div class="p-avatar-wrap${a.scored ? ' verified' : ''}">
         <img class="p-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'p-avatar-fallback\\'>${initials}</div>'"/>
-        ${verified ? '<div class="p-check">&#10003;</div>' : ''}
       </div>`;
+
+    const rankBit = a.scored
+      ? `ranked <span class="brand">#${rank}</span> in the circle`
+      : `in the circle &middot; <span class="unscored-tag">unscored</span>`;
 
     const callsHtml = calls.length
       ? calls.map(callRow).join('')
-      : `<p class="calls-empty">No calls logged yet in the last 30 days.</p>`;
+      : `<p class="calls-empty">No standout calls logged in the v19.8 window.</p>`;
+
+    const repVal = a.scored ? a.repScore : '—';
+    const fourx = a.scored ? (a.calls4x ?? '—') : '—';
+    const totalCalls = a.scored ? (a.calls ?? '—') : '—';
 
     document.getElementById('profile-root').innerHTML = `
       <section class="profile">
         ${avatar}
         <div>
-          <div class="p-eyebrow">${verified ? 'verified caller' : 'inner circle member'}</div>
+          <div class="p-eyebrow">${a.scored ? 'ranked caller' : 'inner circle member'}</div>
           <div class="p-handle">${a.handle}</div>
-          <div class="p-sub">${chainLabel[a.chain]} caller &middot; ranked <span class="brand">#${rank}</span> in the circle</div>
+          <div class="p-sub">${chainLabel[a.chain] ? chainLabel[a.chain] + ' caller &middot; ' : ''}${rankBit}</div>
         </div>
       </section>
 
       <section class="p-stats">
-        <div class="p-stat"><div class="l">rep tier</div><div class="v ${verified ? 'tier-aplus' : ''}">${a.repTier}</div></div>
-        <div class="p-stat"><div class="l">rep score</div><div class="v">${a.repScore}</div></div>
-        <div class="p-stat"><div class="l">volume</div><div class="v">${a.vol}</div></div>
-        <div class="p-stat"><div class="l">followers</div><div class="v">${a.followers}</div></div>
+        <div class="p-stat"><div class="l">rep score</div><div class="v ${a.scored ? 'tier-aplus' : ''}">${repVal}</div></div>
+        <div class="p-stat"><div class="l">4x+ calls</div><div class="v">${fourx}</div></div>
+        <div class="p-stat"><div class="l">calls</div><div class="v">${totalCalls}</div></div>
+        <div class="p-stat"><div class="l">followers</div><div class="v">${a.followers || '—'}</div></div>
       </section>
 
       <div class="share-row">
@@ -121,10 +128,10 @@
           Share on X
           <span aria-hidden="true">&rarr;</span>
         </a>
-        <span class="share-note">peak score ${a.repPeak} &middot; refreshed weekly</span>
+        <span class="share-note">v19.8 reputation snapshot</span>
       </div>
 
-      <div class="section-divider">// track record &middot; last 30 days</div>
+      <div class="section-divider">// track record &middot; biggest calls</div>
       <section>
         ${callsHtml}
       </section>
@@ -146,12 +153,14 @@
       const res = await fetch('/hall-data.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
-      const ranked = [...data.athletes].sort((a, b) => b.repScore - a.repScore);
+      const ranked = [...data.athletes].sort(rankSort);
       const idx = ranked.findIndex(a => a.handle.replace('@', '').toLowerCase() === slug);
       if (idx === -1) { renderNotFound(slug); return; }
       const a = ranked[idx];
+      // Rank only counts among scored callers; unscored have no rank.
+      const rank = a.scored ? ranked.filter(x => x.scored).findIndex(x => x === a) + 1 : null;
       const calls = (data.calls || []).filter(c => c.caller.replace('@', '').toLowerCase() === slug);
-      renderProfile(a, idx + 1, calls);
+      renderProfile(a, rank, calls);
     } catch (e) {
       console.error('Profile data load failed:', e);
       renderNotFound(slug);
