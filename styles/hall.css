@@ -360,6 +360,18 @@ html, body {
 }
 .ath-tier-meta .brand { color: var(--c); }
 
+/* score-focal number (rankings cards — replaces character art) */
+.ath-score-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--c);
+  margin-bottom: 8px;
+}
+.ath-score-num.dim { color: var(--text-30); }
+
 /* compact character portrait (rankings cards) — premium replacement
    for the old flat tier letter. Tier color (--c) rings the art + the chip. */
 .ath-portrait {
@@ -502,107 +514,130 @@ html, body {
    The art already carries its tier's baked glow, so the chrome stays quiet. */
 .podium {
   display: grid;
-  grid-template-columns: 1fr 1.22fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  gap: 20px;
   align-items: end;
+  margin-top: 12px;
 }
 @media (max-width: 760px) {
-  .podium { grid-template-columns: 1fr; align-items: stretch; }
+  .podium { grid-template-columns: 1fr; align-items: stretch; gap: 52px; }
   .podium .pos-1 { order: -1; }
 }
-.podium-card {
+
+/* === FLOATING CHARACTER-SELECT PODIUM ===
+   No card chrome. Each character stands free on a glowing pedestal,
+   square art edges dissolved into the black canvas via a radial mask. */
+.podium-fig {
   --c: var(--brand);
   position: relative;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 0 0 24px 0;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: all 300ms;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 300ms ease;
 }
-.podium-card:hover {
-  border-color: var(--brand-30);
-  box-shadow: var(--glow-card);
-  transform: translateY(-2px);
-}
-.podium-card.featured {
-  border-color: var(--brand-30);
-  box-shadow: var(--glow-card);
-}
-.podium-card.featured:hover { box-shadow: var(--glow-strong); }
+.podium-fig:hover,
+.podium-fig:active { transform: translateY(-5px); }
 
-/* --- character art (focal) --- */
-.podium-art-wrap {
+/* --- stage: aura + character + pedestal stacked --- */
+.podium-stage {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  overflow: hidden;
 }
+
+/* radial aura bloom behind the character */
+.podium-aura {
+  position: absolute;
+  left: 50%; top: 44%;
+  width: 96%; height: 96%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 50% 50%, var(--c) 0%, transparent 60%);
+  opacity: 0.16;
+  filter: blur(22px);
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+.podium-fig.featured .podium-aura { opacity: 0.26; }
+.podium-fig:hover .podium-aura,
+.podium-fig:active .podium-aura { opacity: 0.40; }
+
+/* character art — square dissolved into the page */
 .podium-art {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
+  object-fit: contain;
+  -webkit-mask-image: radial-gradient(ellipse 80% 92% at 50% 47%, #000 62%, transparent 88%);
+  mask-image: radial-gradient(ellipse 80% 92% at 50% 47%, #000 62%, transparent 88%);
   transition: transform 450ms ease;
 }
-.podium-card:hover .podium-art { transform: scale(1.04); }
-.podium-art-wrap::after {
-  content: '';
-  position: absolute; left: 0; right: 0; bottom: 0;
-  height: 58%;
-  background: linear-gradient(to top, var(--bg) 6%, rgba(0,0,0,0.55) 42%, transparent);
-  pointer-events: none;
+/* featured #1 is bigger, give its art extra headroom so the tall
+   characters (raised weapons/heads) don't get clipped by the fade */
+.podium-fig.featured .podium-art {
+  -webkit-mask-image: radial-gradient(ellipse 86% 98% at 50% 49%, #000 70%, transparent 93%);
+  mask-image: radial-gradient(ellipse 86% 98% at 50% 49%, #000 70%, transparent 93%);
 }
+.podium-fig:hover .podium-art,
+.podium-fig:active .podium-art { transform: scale(1.05); }
+
+/* glowing floor disc under the feet */
+.podium-pedestal {
+  position: absolute;
+  z-index: 1;
+  left: 50%; bottom: 3%;
+  width: 58%; height: 13%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, var(--c) 0%, transparent 68%);
+  opacity: 0.42;
+  filter: blur(8px);
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+.podium-fig:hover .podium-pedestal,
+.podium-fig:active .podium-pedestal { opacity: 0.6; }
+
+/* rank + tier markers float on the stage */
 .podium-tierbadge {
   position: absolute;
-  top: 12px; left: 12px;
+  top: 2%; left: 6%;
   z-index: 3;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
   font-size: 20px;
   line-height: 1;
   color: var(--c);
-  background: rgba(0,0,0,0.5);
-  border: 1px solid var(--border-strong);
-  border-radius: 8px;
-  padding: 6px 10px;
-  backdrop-filter: blur(4px);
+  text-shadow: 0 0 14px var(--c);
 }
-.podium-card.featured .podium-tierbadge { font-size: 26px; padding: 8px 13px; }
+.podium-fig.featured .podium-tierbadge { font-size: 27px; }
 .podium-rank {
   position: absolute;
-  top: 12px; right: 14px;
+  top: 2%; right: 6%;
   z-index: 3;
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
   color: var(--text-55);
-  background: rgba(0,0,0,0.5);
-  border-radius: 999px;
-  padding: 4px 9px;
-  backdrop-filter: blur(4px);
 }
-.podium-card.featured .podium-rank { color: var(--c); font-size: 13px; }
+.podium-fig.featured .podium-rank { color: var(--c); font-size: 13px; }
 
-/* --- real pfp, overlapping the art→body seam --- */
+/* --- real pfp, sits just under the character --- */
 .podium-pfp-wrap {
   position: relative;
-  width: 54px; height: 54px;
-  margin: -30px auto 0;
+  width: 52px; height: 52px;
+  margin: -8px auto 0;
   z-index: 4;
 }
-.podium-card.featured .podium-pfp-wrap { width: 66px; height: 66px; margin-top: -38px; }
+.podium-fig.featured .podium-pfp-wrap { width: 64px; height: 64px; }
 .podium-pfp,
 .podium-pfp-fallback {
   width: 100%; height: 100%;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--c);
-  box-shadow: 0 0 0 3px var(--bg);
+  box-shadow: 0 0 0 3px var(--bg), 0 0 16px var(--c);
   background: var(--bg);
 }
 .podium-pfp-fallback {
@@ -622,16 +657,14 @@ html, body {
   font-size: 11px; font-weight: 700; color: var(--bg); line-height: 1;
 }
 
-/* --- body --- */
-.podium-body {
-  width: 100%;
-  padding: 0 20px;
+/* --- floating info, no box --- */
+.podium-info {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.podium-handle { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 9px; }
-.podium-card.featured .podium-handle { font-size: 18px; }
+.podium-handle { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 10px; }
+.podium-fig.featured .podium-handle { font-size: 18px; }
 .podium-chain {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -645,11 +678,10 @@ html, body {
 .podium-score .brand { color: var(--c); }
 .podium-stats {
   display: flex;
-  gap: 18px;
+  gap: 22px;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid var(--border);
-  width: 100%;
   justify-content: center;
 }
 .podium-stat { text-align: center; }
@@ -986,7 +1018,7 @@ html, body {
 .list { margin: 24px 0 0 0; }
 .list-head, .c-row {
   display: grid;
-  grid-template-columns: 46px 40px 1fr 56px 70px 96px 80px;
+  grid-template-columns: 44px 40px 1fr 64px 56px 64px 84px;
   align-items: center;
   gap: 14px;
 }
@@ -998,7 +1030,7 @@ html, body {
   text-transform: uppercase;
   color: var(--text-30);
 }
-.list-head .r-num, .list-head .r-tier, .list-head .r-score, .list-head .r-vol, .list-head .r-flw { text-align: center; }
+.list-head .r-num, .list-head .r-score, .list-head .r-vol, .list-head .r-calls, .list-head .r-flw { text-align: center; }
 
 .c-row {
   padding: 14px 16px;
@@ -1048,24 +1080,27 @@ html, body {
   font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--brand-60); margin-top: 2px;
 }
-.r-tier {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 18px; font-weight: 700; text-align: center;
-}
-.r-tier.aplus { color: var(--tier-aplus); }
-.r-tier.a { color: var(--tier-a); }
-.r-tier.b { color: var(--tier-b); }
-.r-tier.c { color: var(--tier-c); }
-.r-tier.d { color: var(--tier-d); }
-.r-score, .r-vol, .r-flw {
+.r-score, .r-vol, .r-calls, .r-flw {
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px; text-align: center;
 }
-.r-score { color: var(--text); font-weight: 600; }
-.r-vol, .r-flw { color: var(--text-70); }
+.r-score { color: var(--brand); font-weight: 700; font-size: 15px; }
+.c-row.unscored .r-score { color: var(--text-30); }
+.r-vol, .r-calls, .r-flw { color: var(--text-70); }
+
+/* top-3 get a subtle highlight + brighter rank */
+.c-row.top-1, .c-row.top-2, .c-row.top-3 {
+  background: linear-gradient(90deg, var(--brand-08), transparent 60%);
+}
+.c-row.top-1 .r-num, .c-row.top-2 .r-num, .c-row.top-3 .r-num { color: var(--brand); }
+.c-row.top-1 { background: linear-gradient(90deg, rgba(57,245,144,0.14), transparent 62%); }
+.c-row.top-1 .r-avatar {
+  border: 1.5px solid var(--brand);
+  box-shadow: 0 0 0 1.5px #000, 0 0 10px var(--brand-30);
+}
 @media (max-width: 720px) {
-  .list-head, .c-row { grid-template-columns: 36px 36px 1fr 44px 56px; gap: 10px; }
-  .r-vol, .list-head .r-vol { display: none; }
+  .list-head, .c-row { grid-template-columns: 32px 34px 1fr 52px 48px; gap: 10px; }
+  .r-calls, .list-head .r-calls { display: none; }
   .r-flw, .list-head .r-flw { display: none; }
 }
 
@@ -1201,8 +1236,7 @@ footer.brand-footer a:hover { color: var(--brand); }
 
 /* --- Touch feedback (mirrors hover, fires on tap) --- */
 .athlete:active,
-.room-card:active,
-.podium-card:active {
+.room-card:active {
   border-color: var(--brand-30);
   box-shadow: var(--glow-card);
 }
@@ -1251,4 +1285,57 @@ footer.brand-footer a:hover { color: var(--brand); }
     font-size: 11px;
   }
   .toolbar { gap: 14px 24px; }
+}
+
+/* ============================================================
+   HOW THE SCORE WORKS (rankings explainer — real v19.8 logic)
+   ============================================================ */
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 4px;
+}
+@media (max-width: 720px) { .how-grid { grid-template-columns: 1fr; } }
+.how-step {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+.how-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.16em;
+  color: var(--brand);
+}
+.how-name { font-size: 15px; font-weight: 600; color: var(--text); margin-top: 10px; }
+.how-desc { font-size: 13px; color: var(--text-55); margin-top: 7px; line-height: 1.55; }
+.how-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.04em;
+  color: var(--text-30); margin-top: 18px;
+}
+
+/* ============================================================
+   UNSCORED STATE (no v19.8 score yet — no color, dimmed)
+   ============================================================ */
+.athlete.unscored,
+.c-row.unscored { --c: var(--text-30); }
+.athlete.unscored .ath-avatar,
+.athlete.unscored .ath-portrait img,
+.c-row.unscored .r-avatar {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+.athlete.unscored { opacity: 0.78; }
+.athlete.unscored:hover { opacity: 1; border-color: var(--border-strong); box-shadow: none; }
+.c-row.unscored { opacity: 0.72; }
+.c-row.unscored:hover { opacity: 1; }
+.unscored-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-30);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 3px 9px;
 }

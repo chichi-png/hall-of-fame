@@ -36,20 +36,20 @@
   <!-- HERO -->
   <section class="hero">
     <div class="eyebrow">// the inner circle <span class="preview-tag">exclusive</span></div>
-    <h1>Reputation is the only flex.<br/><span class="accent">Ranked by rep. Proven on-chain.</span></h1>
-    <p>The sharpest callers in the Inner Circle. Ranked by reputation, not referrals.<br/><span style="color: var(--text-30); font-size: 13px;">Rankings go live when the scoring system ships.</span></p>
+    <h1>Ranked by rep. <span class="accent">Proven on-chain.</span></h1>
+    <p>The sharpest callers in the Inner Circle. Ranked by reputation, not referrals.</p>
     <div class="hero-stats">
       <div>
-        <div class="label">verified A+</div>
-        <div class="value">3</div>
+        <div class="label">ranked</div>
+        <div class="value">21</div>
       </div>
       <div>
         <div class="label">the circle</div>
-        <div class="value">42</div>
+        <div class="value">48</div>
       </div>
       <div>
-        <div class="label">last refresh</div>
-        <div class="value">W22<span class="sm"> · monday</span></div>
+        <div class="label">scoring</div>
+        <div class="value">v19.8<span class="sm"> · may 29</span></div>
       </div>
     </div>
   </section>
@@ -58,7 +58,7 @@
   <div class="section-divider">// the spotlight</div>
   <section>
     <h2 class="section-heading">Best of the best.</h2>
-    <p class="section-sub">The three highest rep scores in the circle. Verified A+.</p>
+    <p class="section-sub">The three highest rep scores in the circle.</p>
     <div class="podium" id="podium"></div>
   </section>
 
@@ -76,28 +76,31 @@
   function podiumCard(a, rank, tierColors) {
     const featured = rank === 1 ? ' featured' : '';
     const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
-    const c = (tierColors && tierColors[a.repTier]) || '#39F590';
-    const slug = tierSlug[a.repTier] || 'd';
+    // No official letter tiers yet — scored callers get the brand-green treatment.
+    // When the real score→grade bands land, swap c + slug to the per-tier values.
+    const c = '#39F590';
+    const slug = 'aplus';
     const art = a.character ? `assets/tier-cards/${a.character}/${slug}.png` : '';
-    const check = a.repTier === 'A+' ? '<div class="podium-check">✓</div>' : '';
+    const chain = chainLabel[a.chain] || '';
+    const pfp = a.avatar
+      ? `<img class="podium-pfp" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'podium-pfp-fallback\\'>${initials}</div>'"/>`
+      : `<div class="podium-pfp-fallback">${initials}</div>`;
     return `
-      <a class="podium-card pos-${rank}${featured}" style="--c:${c}" href="/c/${a.handle.replace('@', '')}">
-        <div class="podium-art-wrap">
-          <img class="podium-art" src="${asset(art)}" alt="${a.handle} — ${a.repTier} ${a.character || ''}" loading="lazy"/>
-          <div class="podium-tierbadge">${a.repTier}</div>
+      <a class="podium-fig pos-${rank}${featured}" style="--c:${c}" href="/c/${a.handle.replace('@', '')}">
+        <div class="podium-stage">
+          <div class="podium-aura"></div>
           <div class="podium-rank">#${rank}</div>
+          <img class="podium-art" src="${asset(art)}" alt="${a.handle} — ${a.character || ''}" loading="lazy"/>
+          <div class="podium-pedestal"></div>
         </div>
-        <div class="podium-pfp-wrap">
-          <img class="podium-pfp" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'podium-pfp-fallback\\'>${initials}</div>'"/>
-          ${check}
-        </div>
-        <div class="podium-body">
+        <div class="podium-info">
+          <div class="podium-pfp-wrap">${pfp}</div>
           <div class="podium-handle">${a.handle}</div>
-          <div class="podium-chain">${chainLabel[a.chain]}</div>
-          <div class="podium-score">score <span class="brand">${a.repScore}</span> · peak ${a.repPeak}</div>
+          <div class="podium-chain">${chain}</div>
+          <div class="podium-score">rep <span class="brand">${a.repScore}</span></div>
           <div class="podium-stats">
-            <div class="podium-stat"><div class="v">${a.vol}</div><div class="l">volume</div></div>
-            <div class="podium-stat"><div class="v">${a.followers}</div><div class="l">followers</div></div>
+            <div class="podium-stat"><div class="v">${a.calls4x ?? '—'}</div><div class="l">4x+ calls</div></div>
+            <div class="podium-stat"><div class="v">${a.followers || '—'}</div><div class="l">followers</div></div>
           </div>
         </div>
       </a>`;
@@ -111,12 +114,12 @@
       const athletes = data.athletes;
 
       const heroStats = document.querySelectorAll('.hero-stats > div .value');
-      if (heroStats[0]) heroStats[0].textContent = data.meta.verifiedAplusCount;
-      if (heroStats[1]) heroStats[1].textContent = data.meta.cohortSize;
+      if (heroStats[0]) heroStats[0].textContent = data.meta.scoredCount;
+      if (heroStats[1]) heroStats[1].textContent = data.meta.rosterSize;
       if (heroStats[2]) heroStats[2].innerHTML = data.meta.lastRefresh + '<span class="sm"> · ' + data.meta.lastRefreshLabel + '</span>';
 
       const tierColors = (data.meta && data.meta.tierColors) || {};
-      const top3 = [...athletes].sort((a, b) => b.repScore - a.repScore).slice(0, 3);
+      const top3 = athletes.filter(a => a.scored).sort((a, b) => b.repScore - a.repScore).slice(0, 3);
       // DOM order for podium effect: #2 (left), #1 (center), #3 (right)
       const order = [top3[1], top3[0], top3[2]];
       const ranks = [2, 1, 3];
