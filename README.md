@@ -19,10 +19,10 @@ Routing (clean URLs, rewrites, redirects) is in `vercel.json`.
 | URL | Page |
 |---|---|
 | `/` | Hall of Fame — hero + top-3 podium |
-| `/rankings` | Full circle, ranked by rep (cards/table, all-time/weekly/monthly) + tier ladder |
-| `/chains` | Filter by chain (SOL / ETH / BASE / SUI) |
+| `/rankings` | Full circle, ranked by rep (stat-line table: scored callers up top, rest below) + how-the-score-works |
+| `/chains` | Filter by chain — chips are data-driven (only chains with members show) |
 | `/reach` | Sorted by X followers |
-| `/calls` | Best winning calls, last 30 days |
+| `/calls` | Biggest winning calls, all-time (scored on-chain by peak move after the call) |
 | `/about` | What the Hall is vs the mini app |
 | `/c/{handle}` | Individual member profile + Share-on-X |
 
@@ -52,18 +52,26 @@ hall-of-fame/
 
 ```jsonc
 {
-  "meta": { "verifiedAplusCount": 3, "cohortSize": 42, "lastRefresh": "W22", ... },
+  "meta": {
+    "rosterSize": 48, "scoredCount": 21,
+    "scoringSource": "v19.8 caller reputation handover (Conor/Spyro, 2026-05-29)",
+    "lastRefresh": "v19.8", "lastRefreshLabel": "may 29",
+    "tierColors": { "A+": "#39F590", ... },
+    "tierBands": null   // letter grades pending official score->grade bands from the team
+  },
   "athletes": [
-    { "handle": "@rbthreek", "avatar": "avatars/rbthreek.jpg", "character": "samurai",
-      "chain": "sol", "repTier": "A+", "repScore": 87, "repWeekly": 91, "repMonthly": 88,
-      "repPeak": 94, "vol": "$12.4M", "followers": "128K" }
+    { "handle": "@chironchain", "avatar": "avatars/chironchain.jpg", "character": "samurai",
+      "chain": "base", "scored": true, "repScore": 94.5, "repTier": null, "qualified": null,
+      "calls4x": 6, "calls": 60, "followers": "6.8K" }
   ],
-  "calls": [ { "chain": "sol", "ticker": "$BONK", "caller": "@rbthreek", "entry": "...", "pnl": 248, "time": "5d" } ]
+  "calls": [ { "chain": "base", "ticker": "$ODAI", "caller": "@thebasedfrogx", "mult": 105.0, "date": "2026-02-12" } ]
 }
 ```
 
-> **Currently mock data.** Real rep scores come from Conor's reputation system (not live yet).
-> When it ships, refresh `hall-data.json`, then regenerate share assets (below).
+> **Live data is the v19.8 reputation snapshot** (`repScore` = display_score, 0–100, floor 40).
+> `repTier` is still `null` everywhere — letter grades (A+ → D) land once the team locks the
+> score→grade bands. Unscored members (`scored: false`) render with an "unscored" tag.
+> On refresh, update `hall-data.json` then regenerate share assets (below).
 
 ## Share cards (Open Graph)
 

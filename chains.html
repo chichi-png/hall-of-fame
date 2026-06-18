@@ -40,13 +40,7 @@
   </header>
 
   <section style="margin-top: 28px;">
-    <div class="chip-row">
-      <button class="chip active" data-chain="all">All chains</button>
-      <button class="chip" data-chain="sol">Solana</button>
-      <button class="chip" data-chain="eth">Ethereum</button>
-      <button class="chip" data-chain="base">Base</button>
-      <button class="chip" data-chain="sui">Sui</button>
-    </div>
+    <div class="chip-row" id="chip-row"></div>
     <div id="chain-list"></div>
   </section>
 
@@ -58,6 +52,8 @@
 
 <script>
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+  const chainName = { sol: 'Solana', eth: 'Ethereum', base: 'Base', sui: 'Sui' };
+  const chainOrder = ['sol', 'eth', 'base', 'sui'];
   function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
 
   function rankSort(a, b) {
@@ -88,6 +84,13 @@
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
       const athletes = data.athletes;
+
+      // Only show chips for chains that actually have members. Self-maintains as the roster grows.
+      const present = new Set(athletes.map(a => a.chain).filter(Boolean));
+      const chips = ['<button class="chip active" data-chain="all">All chains</button>']
+        .concat(chainOrder.filter(c => present.has(c))
+          .map(c => `<button class="chip" data-chain="${c}">${chainName[c]}</button>`));
+      document.getElementById('chip-row').innerHTML = chips.join('');
 
       function render(chain) {
         const list = (chain === 'all' ? [...athletes] : athletes.filter(a => a.chain === chain))
