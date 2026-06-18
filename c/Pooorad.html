@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@Pooorad · rep 54.2 · Altcoinist Inner Circle</title>
+
+<meta property="og:title" content="@Pooorad · rep 54.2 · Altcoinist Inner Circle" />
+<meta property="og:description" content="Ranked #18 in the Altcoinist Inner Circle. Rep 54.2, proven on-chain. Reputation is the only flex." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:image" content="https://altcoinist-affiliate.vercel.app/assets/cards/Pooorad.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:image" content="https://altcoinist-affiliate.vercel.app/assets/cards/Pooorad.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/hall.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="nav">
+    <a class="nav-brand" href="/">altcoinist<span class="dot">.</span> the hall of fame</a>
+    <div class="nav-links">
+      <a class="nav-link" href="/rankings">Rankings</a>
+      <a class="nav-link" href="/chains">Chains</a>
+      <a class="nav-link" href="/reach">Reach</a>
+      <a class="nav-link" href="/calls">Calls</a>
+      <a class="nav-link" href="/about">About</a>
+    </div>
+  </nav>
+
+  <main id="profile-root"></main>
+
+  <footer class="brand-footer">
+    <div>// altcoinist · inner circle · exclusive</div>
+    <a href="/">the hall of fame &rarr;</a>
+  </footer>
+</div>
+
+<script>
+  const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+
+  // Root-absolute asset path — this page is served at /c/{handle}, so relative paths would break.
+  function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
+
+  function rankSort(a, b) {
+    if (a.scored !== b.scored) return a.scored ? -1 : 1;
+    if (a.scored) return b.repScore - a.repScore;
+    return 0;
+  }
+
+  // Handle comes from the path (/c/handle) or ?h= for local testing.
+  function getHandleSlug() {
+    const fromQuery = new URLSearchParams(location.search).get('h');
+    if (fromQuery) return fromQuery.replace('@', '').toLowerCase();
+    const parts = location.pathname.split('/').filter(Boolean);
+    const idx = parts.indexOf('c');
+    if (idx !== -1 && parts[idx + 1]) return decodeURIComponent(parts[idx + 1]).replace('@', '').toLowerCase();
+    return parts.length ? parts[parts.length - 1].replace('.html', '').replace('@', '').toLowerCase() : '';
+  }
+
+  function callRow(c) {
+    return `
+      <div class="call-row">
+        <span class="chain-pill">${chainLabel[c.chain] || ''}</span>
+        <div>
+          <div class="call-ticker">${c.ticker}</div>
+          <div class="call-entry">${c.date || ''}</div>
+        </div>
+        <div class="call-pnl win">${c.mult}x</div>
+        <div class="call-time"></div>
+      </div>`;
+  }
+
+  function shareText(a, rank) {
+    if (a.scored) {
+      return `Ranked #${rank} in the Altcoinist Inner Circle. Rep ${a.repScore}, proven on-chain. Reputation is the only flex.`;
+    }
+    return `In the Altcoinist Inner Circle. Reputation, not referrals.`;
+  }
+
+  function renderProfile(a, rank, calls) {
+    const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
+    const profileUrl = location.origin + '/c/' + a.handle.replace('@', '');
+    const tweetUrl = 'https://twitter.com/intent/tweet?text=' +
+      encodeURIComponent(shareText(a, rank)) + '&url=' + encodeURIComponent(profileUrl);
+
+    const avatar = `
+      <div class="p-avatar-wrap${a.scored ? ' verified' : ''}">
+        <img class="p-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'p-avatar-fallback\\'>${initials}</div>'"/>
+      </div>`;
+
+    const rankBit = a.scored
+      ? `ranked <span class="brand">#${rank}</span> in the circle`
+      : `in the circle &middot; <span class="unscored-tag">unscored</span>`;
+
+    const callsHtml = calls.length
+      ? calls.map(callRow).join('')
+      : `<p class="calls-empty">No standout calls logged in the v19.8 window.</p>`;
+
+    const repVal = a.scored ? a.repScore : '—';
+    const fourx = a.scored ? (a.calls4x ?? '—') : '—';
+    const totalCalls = a.scored ? (a.calls ?? '—') : '—';
+
+    document.getElementById('profile-root').innerHTML = `
+      <section class="profile">
+        ${avatar}
+        <div>
+          <div class="p-eyebrow">${a.scored ? 'ranked caller' : 'inner circle member'}</div>
+          <div class="p-handle">${a.handle}</div>
+          <div class="p-sub">${chainLabel[a.chain] ? chainLabel[a.chain] + ' caller &middot; ' : ''}${rankBit}</div>
+        </div>
+      </section>
+
+      <section class="p-stats">
+        <div class="p-stat"><div class="l">rep score</div><div class="v ${a.scored ? 'tier-aplus' : ''}">${repVal}</div></div>
+        <div class="p-stat"><div class="l">4x+ calls</div><div class="v">${fourx}</div></div>
+        <div class="p-stat"><div class="l">calls</div><div class="v">${totalCalls}</div></div>
+        <div class="p-stat"><div class="l">followers</div><div class="v">${a.followers || '—'}</div></div>
+      </section>
+
+      <div class="share-row">
+        <a class="share-btn" href="${tweetUrl}" target="_blank" rel="noopener">
+          Share on X
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <span class="share-note">v19.8 reputation snapshot</span>
+      </div>
+
+      <div class="section-divider">// track record &middot; biggest calls</div>
+      <section>
+        ${callsHtml}
+      </section>
+    `;
+    document.title = a.handle + ' — Altcoinist Hall of Fame';
+  }
+
+  function renderNotFound(slug) {
+    document.getElementById('profile-root').innerHTML = `
+      <div class="notfound">
+        <h1>Member not found.</h1>
+        <p>No Inner Circle member matches "${slug}". <a href="/rankings">See the rankings &rarr;</a></p>
+      </div>`;
+  }
+
+  (async () => {
+    const slug = getHandleSlug();
+    try {
+      const res = await fetch('/hall-data.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
+      const data = await res.json();
+      const ranked = [...data.athletes].sort(rankSort);
+      const idx = ranked.findIndex(a => a.handle.replace('@', '').toLowerCase() === slug);
+      if (idx === -1) { renderNotFound(slug); return; }
+      const a = ranked[idx];
+      // Rank only counts among scored callers; unscored have no rank.
+      const rank = a.scored ? ranked.filter(x => x.scored).findIndex(x => x === a) + 1 : null;
+      const calls = (data.calls || []).filter(c => c.caller.replace('@', '').toLowerCase() === slug);
+      renderProfile(a, rank, calls);
+    } catch (e) {
+      console.error('Profile data load failed:', e);
+      renderNotFound(slug);
+    }
+  })();
+</script>
+
+</body>
+</html>
