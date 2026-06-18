@@ -35,3 +35,11 @@ leaderboard-data-output.json
 TEST-LOCAL.html
 test-nav.html
 test_syntax.html
+
+# Caller identity map — links public X handles to internal TG/caller names.
+# NEVER commit: this repo is public + Vercel-served, so it would be fetchable
+# at /caller-map.json and deanonymize affiliates' TG identities. Stays local;
+# refresh-hall.py reads it from the working dir. Regenerable from a board.
+caller-map.json
+board-v198.json
+audit-shots/

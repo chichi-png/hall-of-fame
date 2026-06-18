@@ -69,9 +69,40 @@ hall-of-fame/
 ```
 
 > **Live data is the v19.8 reputation snapshot** (`repScore` = display_score, 0–100, floor 40).
-> `repTier` is still `null` everywhere — letter grades (A+ → D) land once the team locks the
-> score→grade bands. Unscored members (`scored: false`) render with an "unscored" tag.
-> On refresh, update `hall-data.json` then regenerate share assets (below).
+> `repTier` is `null` everywhere and the Hall shows the **number, not a letter** — this matches
+> the app, which dropped A+→D letter tiers in v15. Letters would be a fresh design decision
+> (pick the score→grade cutoffs with Conor/Spyro), not something the scoring emits.
+> Unscored members (`scored: false`) render with an "unscored" tag.
+
+## Refreshing scores (the data pipeline)
+
+Scores come from Conor/Spyro's **v19.8 caller-reputation board**. The board identifies callers
+by an **internal name** (a TG/caller handle, e.g. `cryptocchio0`), not the X handle the Hall shows
+(`@mrLCguy`). `refresh-hall.py` bridges that gap and updates everything in one command.
+
+```bash
+# preview (dry run — shows up/down/new/dropped, writes nothing)
+python refresh-hall.py --html "<path>/v19.8-leaderboard.html"
+python refresh-hall.py --csv  "<path>/v198_board.csv"          # canonical score_v198.py output
+
+# apply: rewrites the score fields in hall-data.json + regenerates all cards/pages
+python refresh-hall.py --csv "<path>/v198_board.csv" --apply --label "jun 18"
+```
+
+It only touches the **score fields** (`repScore`, `calls4x`, `calls`, `scored`). Chain, character,
+avatar, followers are left alone. It never auto-unscores someone who drops off the board (it warns
+instead), and it lists any board callers not yet in the map.
+
+**`caller-map.json` — the bridge (LOCAL ONLY, gitignored).** Maps each Hall X-handle to its board
+internal name. It is **deliberately not committed**: this repo is public + Vercel-served, so a
+committed map would be fetchable at `/caller-map.json` and would deanonymize affiliates' TG
+identities. Keep it local. It was seeded by score-matching the May-29 board (display_score + n4x +
+all-time calls — a unique match across all 21 scored). Set `verified: true` per row after eyeballing.
+Regenerable from any board if lost.
+
+**Where the board comes from:** re-run `score_v198.py` in the `4-signals` handover folder against a
+fresh data dump, or read live from the app's scores DB. Either produces the board `refresh-hall.py`
+consumes. See `5-growth-funnel/4-signals/spyro-workspace/research/v19.8-scoring-handover-2026-05-29/`.
 
 ## Share cards (Open Graph)
 
