@@ -1294,6 +1294,12 @@ footer.brand-footer a:hover { color: var(--brand); }
     font-size: 11px;
   }
   .toolbar { gap: 14px 24px; }
+  /* footer: stack the two items so they don't collide on narrow screens */
+  footer.brand-footer {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 56px;
+  }
 }
 
 /* ============================================================

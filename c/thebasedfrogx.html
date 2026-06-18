@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="stylesheet" href="/styles/hall.css" />
 </head>
 <body>
@@ -54,13 +55,18 @@
   }
 
   // Handle comes from the path (/c/handle) or ?h= for local testing.
+  // Normalize every source the same way: drop a leading @, a trailing .html
+  // (Vercel cleanUrls hides it in prod, but direct .html hits must still resolve), lowercase.
+  function normalizeSlug(s) {
+    return decodeURIComponent(s).replace(/^@/, '').replace(/\.html$/i, '').toLowerCase();
+  }
   function getHandleSlug() {
     const fromQuery = new URLSearchParams(location.search).get('h');
-    if (fromQuery) return fromQuery.replace('@', '').toLowerCase();
+    if (fromQuery) return normalizeSlug(fromQuery);
     const parts = location.pathname.split('/').filter(Boolean);
     const idx = parts.indexOf('c');
-    if (idx !== -1 && parts[idx + 1]) return decodeURIComponent(parts[idx + 1]).replace('@', '').toLowerCase();
-    return parts.length ? parts[parts.length - 1].replace('.html', '').replace('@', '').toLowerCase() : '';
+    if (idx !== -1 && parts[idx + 1]) return normalizeSlug(parts[idx + 1]);
+    return parts.length ? normalizeSlug(parts[parts.length - 1]) : '';
   }
 
   function callRow(c) {
