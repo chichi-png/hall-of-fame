@@ -27,8 +27,6 @@
     <a class="nav-brand" href="/">altcoinist<span class="dot">.</span> the hall of fame</a>
     <div class="nav-links">
       <a class="nav-link" href="/rankings">Rankings</a>
-      <a class="nav-link" href="/chains">Chains</a>
-      <a class="nav-link" href="/reach">Reach</a>
       <a class="nav-link" href="/calls">Calls</a>
       <a class="nav-link" href="/about">About</a>
     </div>
@@ -106,7 +104,7 @@
 
     const callsHtml = calls.length
       ? calls.map(callRow).join('')
-      : `<p class="calls-empty">No standout calls logged in the v19.8 window.</p>`;
+      : `<p class="calls-empty">No standout calls logged yet.</p>`;
 
     const repVal = a.scored ? a.repScore : '—';
     const fourx = a.scored ? (a.calls4x ?? '—') : '—';
@@ -134,7 +132,7 @@
           Share on X
           <span aria-hidden="true">&rarr;</span>
         </a>
-        <span class="share-note">v19.8 reputation snapshot</span>
+        <span class="share-note">reputation snapshot</span>
       </div>
 
       <div class="section-divider">// track record &middot; biggest calls</div>

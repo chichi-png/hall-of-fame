@@ -555,14 +555,14 @@ html, body {
   width: 96%; height: 96%;
   transform: translate(-50%, -50%);
   background: radial-gradient(circle at 50% 50%, var(--c) 0%, transparent 60%);
-  opacity: 0.16;
+  opacity: 0.21;
   filter: blur(22px);
   pointer-events: none;
   transition: opacity 300ms ease;
 }
-.podium-fig.featured .podium-aura { opacity: 0.26; }
+.podium-fig.featured .podium-aura { opacity: 0.36; }
 .podium-fig:hover .podium-aura,
-.podium-fig:active .podium-aura { opacity: 0.40; }
+.podium-fig:active .podium-aura { opacity: 0.48; }
 
 /* character art — square dissolved into the page */
 .podium-art {
@@ -592,13 +592,13 @@ html, body {
   width: 58%; height: 13%;
   transform: translateX(-50%);
   background: radial-gradient(ellipse at center, var(--c) 0%, transparent 68%);
-  opacity: 0.42;
+  opacity: 0.52;
   filter: blur(8px);
   pointer-events: none;
   transition: opacity 300ms ease;
 }
 .podium-fig:hover .podium-pedestal,
-.podium-fig:active .podium-pedestal { opacity: 0.6; }
+.podium-fig:active .podium-pedestal { opacity: 0.7; }
 
 /* rank + tier markers float on the stage */
 .podium-tierbadge {

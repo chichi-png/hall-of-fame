@@ -27,8 +27,6 @@
     <a class="nav-brand" href="/">altcoinist<span class="dot">.</span> the hall of fame</a>
     <div class="nav-links">
       <a class="nav-link active" href="/rankings">Rankings</a>
-      <a class="nav-link" href="/chains">Chains</a>
-      <a class="nav-link" href="/reach">Reach</a>
       <a class="nav-link" href="/calls">Calls</a>
       <a class="nav-link" href="/about">About</a>
     </div>
@@ -41,32 +39,12 @@
   </header>
 
   <section style="margin-top: 28px;">
-    <div id="rankings-content"></div>
-  </section>
-
-  <!-- How the rep score is built -->
-  <div class="section-divider">// how it works</div>
-  <section>
-    <h2 class="section-heading">How the score works.</h2>
-    <p class="section-sub">Reputation, not referrals. Every score is built from on-chain calls — no screenshots, no self-reporting.</p>
-    <div class="how-grid">
-      <div class="how-step">
-        <div class="how-num">01</div>
-        <div class="how-name">Every call is tracked</div>
-        <div class="how-desc">Each on-chain call is pulled and scored on how far it actually ran after the call.</div>
-      </div>
-      <div class="how-step">
-        <div class="how-num">02</div>
-        <div class="how-name">Size and recency weigh in</div>
-        <div class="how-desc">A big win on a real-cap token counts more than a micro-cap. Recent calls count fully; old ones fade.</div>
-      </div>
-      <div class="how-step">
-        <div class="how-num">03</div>
-        <div class="how-name">Consistency beats luck</div>
-        <div class="how-desc">Repeat winners are rewarded. One-hit wonders and repeat ruggers get discounted.</div>
-      </div>
+    <div class="chip-row" id="sort-row">
+      <button class="chip active" data-sort="rep">By rep</button>
+      <button class="chip" data-sort="reach">By reach</button>
     </div>
-    <p class="how-note">Scores shown are the v19.8 reputation snapshot. Letter grades (A+ → D) land once the team locks the bands.</p>
+    <div class="chip-row" id="chain-row" style="margin-top: 10px;"></div>
+    <div id="rankings-content" style="margin-top: 18px;"></div>
   </section>
 
   <footer class="brand-footer">
@@ -77,24 +55,37 @@
 
 <script>
   const chainLabel = { sol: 'SOL', eth: 'ETH', base: 'BASE', sui: 'SUI' };
+  const chainName = { sol: 'Solana', eth: 'Ethereum', base: 'Base', sui: 'Sui' };
+  const chainOrder = ['sol', 'eth', 'base', 'sui'];
   function asset(u) { return /^(https?:|\/)/.test(u) ? u : '/' + u; }
 
   let ATHLETES = [];
+  const state = { sort: 'rep', chain: 'all' };
 
-  // Ranked first by whether a v19.8 score exists, then by score.
+  // Rep view: scored callers first, by score. Reach view: everyone by follower count.
   function rankSort(a, b) {
     if (a.scored !== b.scored) return a.scored ? -1 : 1;
     if (a.scored) return b.repScore - a.repScore;
     return 0;
   }
 
-  function statRow(a, rank) {
+  function followerCount(f) {
+    if (!f) return -1;
+    const n = parseFloat(f);
+    if (isNaN(n)) return -1;
+    if (/M/i.test(f)) return n * 1e6;
+    if (/K/i.test(f)) return n * 1e3;
+    return n;
+  }
+
+  function statRow(a, rank, byReach) {
     const initials = a.handle.replace('@', '').slice(0, 2).toUpperCase();
     const scored = a.scored;
-    const top = scored && rank <= 3 ? ` top-${rank}` : '';
+    const showNum = byReach || scored;
+    const top = !byReach && scored && rank <= 3 ? ` top-${rank}` : '';
     return `
       <a class="c-row${scored ? '' : ' unscored'}${top} rank-${rank}" href="/c/${a.handle.replace('@', '')}">
-        <div class="r-num">${scored ? rank : '·'}</div>
+        <div class="r-num">${showNum ? rank : '·'}</div>
         <div class="r-avatar-wrap">
           <img class="r-avatar" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'r-avatar-fallback\\'>${initials}</div>'"/>
         </div>
@@ -110,7 +101,12 @@
   }
 
   function render() {
-    const ranked = [...ATHLETES].sort(rankSort);
+    const byReach = state.sort === 'reach';
+    let list = state.chain === 'all' ? [...ATHLETES] : ATHLETES.filter(a => a.chain === state.chain);
+    list.sort(byReach ? (a, b) => followerCount(b.followers) - followerCount(a.followers) : rankSort);
+    const rows = list.length
+      ? list.map((a, i) => statRow(a, i + 1, byReach)).join('')
+      : '<p class="list-note">No members on this chain yet.</p>';
     document.getElementById('rankings-content').innerHTML = `
       <div class="list">
         <div class="list-head">
@@ -122,8 +118,27 @@
           <div class="r-calls">Calls</div>
           <div class="r-flw">Followers</div>
         </div>
-        ${ranked.map((a, i) => statRow(a, i + 1)).join('')}
+        ${rows}
       </div>`;
+  }
+
+  function buildChainChips() {
+    const present = new Set(ATHLETES.map(a => a.chain).filter(Boolean));
+    const chips = ['<button class="chip active" data-chain="all">All chains</button>']
+      .concat(chainOrder.filter(c => present.has(c))
+        .map(c => `<button class="chip" data-chain="${c}">${chainName[c]}</button>`));
+    document.getElementById('chain-row').innerHTML = chips.join('');
+  }
+
+  function wireChips(rowId, key) {
+    document.querySelectorAll('#' + rowId + ' .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#' + rowId + ' .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        state[key] = chip.dataset[key];
+        render();
+      });
+    });
   }
 
   (async () => {
@@ -132,6 +147,9 @@
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
       ATHLETES = data.athletes;
+      buildChainChips();
+      wireChips('sort-row', 'sort');
+      wireChips('chain-row', 'chain');
       render();
     } catch (e) {
       console.error('Rankings data load failed:', e);

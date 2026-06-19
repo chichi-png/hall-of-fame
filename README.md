@@ -19,9 +19,7 @@ Routing (clean URLs, rewrites, redirects) is in `vercel.json`.
 | URL | Page |
 |---|---|
 | `/` | Hall of Fame — hero + top-3 podium |
-| `/rankings` | Full circle, ranked by rep (stat-line table: scored callers up top, rest below) + how-the-score-works |
-| `/chains` | Filter by chain — chips are data-driven (only chains with members show) |
-| `/reach` | Sorted by X followers |
+| `/rankings` | Full circle, ranked by rep. Sort toggle (rep / reach) + data-driven chain filter chips |
 | `/calls` | Biggest winning calls, all-time (scored on-chain by peak move after the call) |
 | `/about` | What the Hall is vs the mini app |
 | `/c/{handle}` | Individual member profile + Share-on-X |
@@ -31,7 +29,7 @@ Routing (clean URLs, rewrites, redirects) is in `vercel.json`.
 ```
 hall-of-fame/
 ├── index.html             # landing (/)
-├── rankings.html chains.html reach.html calls.html about.html
+├── rankings.html calls.html about.html
 ├── profile.html           # dynamic /c/{handle} fallback (client-renders from hall-data.json)
 ├── c/{handle}.html        # pre-generated per-member pages (baked-in og: tags) — see below
 ├── styles/hall.css        # shared design system (one source of truth)

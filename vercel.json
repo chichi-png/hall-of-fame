@@ -5,14 +5,6 @@
       "destination": "/rankings.html"
     },
     {
-      "source": "/chains",
-      "destination": "/chains.html"
-    },
-    {
-      "source": "/reach",
-      "destination": "/reach.html"
-    },
-    {
       "source": "/calls",
       "destination": "/calls.html"
     },
@@ -26,6 +18,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/chains",
+      "destination": "/rankings",
+      "permanent": true
+    },
+    {
+      "source": "/reach",
+      "destination": "/rankings",
+      "permanent": true
+    },
     {
       "source": "/hall-of-fame",
       "destination": "/",

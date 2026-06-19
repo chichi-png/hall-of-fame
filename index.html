@@ -27,8 +27,6 @@
     <a class="nav-brand" href="/">altcoinist<span class="dot">.</span> the hall of fame</a>
     <div class="nav-links">
       <a class="nav-link" href="/rankings">Rankings</a>
-      <a class="nav-link" href="/chains">Chains</a>
-      <a class="nav-link" href="/reach">Reach</a>
       <a class="nav-link" href="/calls">Calls</a>
       <a class="nav-link" href="/about">About</a>
     </div>
@@ -41,16 +39,16 @@
     <p>The sharpest callers in the Inner Circle. Ranked by reputation, not referrals.</p>
     <div class="hero-stats">
       <div>
-        <div class="label">ranked</div>
-        <div class="value">21</div>
-      </div>
-      <div>
         <div class="label">the circle</div>
         <div class="value">48</div>
       </div>
       <div>
-        <div class="label">scoring</div>
-        <div class="value">v19.8<span class="sm"> · may 29</span></div>
+        <div class="label">top rep</div>
+        <div class="value">94.5</div>
+      </div>
+      <div>
+        <div class="label">biggest call</div>
+        <div class="value">105x</div>
       </div>
     </div>
   </section>
@@ -115,9 +113,13 @@
       const athletes = data.athletes;
 
       const heroStats = document.querySelectorAll('.hero-stats > div .value');
-      if (heroStats[0]) heroStats[0].textContent = data.meta.scoredCount;
-      if (heroStats[1]) heroStats[1].textContent = data.meta.rosterSize;
-      if (heroStats[2]) heroStats[2].innerHTML = data.meta.lastRefresh + '<span class="sm"> · ' + data.meta.lastRefreshLabel + '</span>';
+      const scoredList = athletes.filter(a => a.scored);
+      const topRep = scoredList.length ? Math.max(...scoredList.map(a => a.repScore)) : null;
+      const callList = data.calls || [];
+      const biggestCall = callList.length ? Math.max(...callList.map(c => c.mult)) : null;
+      if (heroStats[0]) heroStats[0].textContent = data.meta.rosterSize;
+      if (heroStats[1] && topRep != null) heroStats[1].textContent = topRep;
+      if (heroStats[2] && biggestCall != null) heroStats[2].textContent = Math.round(biggestCall) + 'x';
 
       const tierColors = (data.meta && data.meta.tierColors) || {};
       const top3 = athletes.filter(a => a.scored).sort((a, b) => b.repScore - a.repScore).slice(0, 3);
