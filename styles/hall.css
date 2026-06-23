@@ -927,6 +927,9 @@ html, body {
   font-size: 12px;
   margin-top: 2px;
 }
+/* caller name on /calls links to their profile — a path deeper into the Hall */
+a.call-caller { display: inline-block; text-decoration: none; transition: color 200ms; }
+a.call-caller:hover, a.call-caller:active { color: var(--brand); }
 .call-pnl {
   font-family: 'JetBrains Mono', monospace;
   font-size: 16px;
@@ -1039,7 +1042,16 @@ html, body {
   text-transform: uppercase;
   color: var(--text-30);
 }
-.list-head .r-num, .list-head .r-score, .list-head .r-vol, .list-head .r-calls, .list-head .r-flw { text-align: center; }
+/* Header cells are labels, not data — reset the data-cell color/size that
+   would otherwise bleed in (e.g. the green bold .r-score) so every column
+   header reads as one uniform muted label. */
+.list-head .r-num, .list-head .r-score, .list-head .r-vol, .list-head .r-calls, .list-head .r-flw {
+  text-align: center;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--text-30);
+}
 
 .c-row {
   padding: 14px 16px;
@@ -1108,9 +1120,10 @@ html, body {
   box-shadow: 0 0 0 1.5px #000, 0 0 10px var(--brand-30);
 }
 @media (max-width: 720px) {
-  .list-head, .c-row { grid-template-columns: 32px 34px 1fr 52px 48px; gap: 10px; }
+  .list-head, .c-row { grid-template-columns: 28px 32px 1fr 48px 42px; gap: 8px; }
   .r-calls, .list-head .r-calls { display: none; }
   .r-flw, .list-head .r-flw { display: none; }
+  .r-handle { font-size: 14px; }   /* fit more of the handle before truncating */
 }
 
 /* === PROFILE === */
@@ -1347,10 +1360,12 @@ footer.brand-footer a:hover { color: var(--brand); }
 .c-row.unscored { opacity: 0.72; }
 .c-row.unscored:hover { opacity: 1; }
 .unscored-tag {
+  display: inline-block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--text-30);
   border: 1px solid var(--border-strong);
   border-radius: 999px;
-  padding: 3px 9px;
+  padding: 2px 6px;
+  white-space: nowrap;
 }

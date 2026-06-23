@@ -57,7 +57,7 @@
         <span class="chain-pill">${chainLabel[c.chain] || ''}</span>
         <div>
           <div class="call-ticker">${c.ticker}</div>
-          <div class="call-caller">${c.caller}</div>
+          <a class="call-caller" href="/c/${c.caller.replace('@', '')}">${c.caller}</a>
         </div>
         <div class="call-pnl win">${c.mult}x</div>
         <div class="call-time">${c.date || ''}</div>

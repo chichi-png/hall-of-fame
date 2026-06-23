@@ -80,6 +80,12 @@
     const c = '#39F590';
     const slug = 'aplus';
     const art = a.character ? `assets/tier-cards/${a.character}/${slug}.png` : '';
+    // Only render the art img when we have a path, and hide it if it fails to
+    // load — otherwise a missing character would show a broken-image icon
+    // front-and-centre on the home podium. The aura + pedestal stay either way.
+    const artImg = art
+      ? `<img class="podium-art" src="${asset(art)}" alt="${a.handle} — ${a.character || ''}" loading="lazy" onerror="this.style.display='none'"/>`
+      : '';
     const chain = chainLabel[a.chain] || '';
     const pfp = a.avatar
       ? `<img class="podium-pfp" src="${asset(a.avatar)}" alt="" onerror="this.outerHTML='<div class=\\'podium-pfp-fallback\\'>${initials}</div>'"/>`
@@ -89,7 +95,7 @@
         <div class="podium-stage">
           <div class="podium-aura"></div>
           <div class="podium-rank">#${rank}</div>
-          <img class="podium-art" src="${asset(art)}" alt="${a.handle} — ${a.character || ''}" loading="lazy"/>
+          ${artImg}
           <div class="podium-pedestal"></div>
         </div>
         <div class="podium-info">
