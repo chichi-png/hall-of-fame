@@ -2,6 +2,19 @@
 
 **Status:** scoped, not built. Blocked on Conor's reputation system going live (today the data is a manual v19.8 handover from 2026-05-29; `repTier` is still null).
 
+## Where the scores come from (the source)
+
+Conor's v19.8 scoring handover, shared 2026-06-23:
+
+`5-growth-funnel/4-signals/spyro-workspace/research/v19.8-scoring-handover-2026-05-29/`
+
+- `v19.8-leaderboard.html` — the detailed call-level table (wallet, chain, caller, volume, multiple, date)
+- `SCORING-GUIDE.md` — how the score is worked out
+- `reference_implementation/score_v198.py` — the code that turns calls into per-caller scores (repScore, calls4x, calls)
+- `source_data_2026_ytd/` — the raw inputs + rug/exclusion filters
+
+The chain: raw calls → `score_v198.py` → per-caller scores → `hall-data.json`. This is a manual handover folder (Conor's domain — read-only from here). When the live reputation system ships it replaces this as the source.
+
 ## Problem
 
 `hall-data.json` is hand-updated. Every time scores move, someone has to edit the JSON, run `generate-og-card.py`, and dual-push. That makes the Hall a snapshot, not a living asset. The whole "ranked by rep, refreshed weekly" promise on the site depends on a manual chore that won't happen weekly.
@@ -19,7 +32,7 @@ When the reputation system is live, the Hall refreshes itself on a schedule with
 
 ## Open questions (resolve before building)
 
-- **Source of truth:** Conor's rep system API, or a PostHog insight? Need the endpoint + field names.
+- **Source of truth:** today it's the manual handover folder above (`score_v198.py` output). The open question is the *live* source once the rep system ships — Conor's rep system API, or a PostHog insight? Need the endpoint + field names.
 - **Cadence:** weekly (matches the "refreshed weekly" copy) vs daily. Weekly is enough.
 - **Tier bands:** wire `repTier` (A+/A/B/C/D) once the team locks score→grade bands. Until then keep the green-ring "scored" treatment.
 - **New avatars:** auto-fetch from X, or flag for manual add? (See the Hall of Fame pfp workflow.)
