@@ -30,7 +30,7 @@
       <a class="nav-link" href="/rankings">Rankings</a>
       <a class="nav-link" href="/calls">Calls</a>
       <a class="nav-link" href="/about">About</a>
-      <a class="nav-cta" href="https://groupbot.altcoinist.com/?utm_source=hall_of_fame&utm_medium=referral&utm_campaign=nav" target="_blank" rel="noopener">Join →</a>
+      <a class="nav-cta" href="https://t.me/altcoinist_bot?startapp=hof_nav" target="_blank" rel="noopener">Earn your way in</a>
     </div>
   </nav>
 
@@ -94,8 +94,9 @@
     const profileUrl = location.origin + '/c/' + a.handle.replace('@', '');
     const tweetUrl = 'https://twitter.com/intent/tweet?text=' +
       encodeURIComponent(shareText(a, rank)) + '&url=' + encodeURIComponent(profileUrl);
-    // Pull CTA → mini app, tagged with the handle for attribution in PostHog.
-    const appUrl = 'https://groupbot.altcoinist.com/?utm_source=hall_of_fame&utm_medium=referral&utm_campaign=profile&utm_content=' +
+    // Pull CTA → opens the Telegram mini app, tagged with the handle via the
+    // startapp payload so eng can attribute Hall → app signups in PostHog.
+    const appUrl = 'https://t.me/altcoinist_bot?startapp=hof_profile_' +
       a.handle.replace('@', '');
 
     const avatar = `
