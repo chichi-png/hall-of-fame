@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rankings — Altcoinist Inner Circle</title>
+<meta name="description" content="The full Altcoinist Inner Circle, ranked by on-chain reputation. Scored callers up top, the rest of the circle below." />
 
 <meta property="og:title" content="Rankings — Altcoinist Inner Circle" />
 <meta property="og:description" content="The full circle, ranked by rep. All-time, weekly, monthly." />
@@ -29,6 +30,7 @@
       <a class="nav-link active" href="/rankings">Rankings</a>
       <a class="nav-link" href="/calls">Calls</a>
       <a class="nav-link" href="/about">About</a>
+      <a class="nav-cta" href="https://groupbot.altcoinist.com/?utm_source=hall_of_fame&utm_medium=referral&utm_campaign=nav" target="_blank" rel="noopener">Join →</a>
     </div>
   </nav>
 
@@ -44,7 +46,8 @@
       <button class="chip" data-sort="reach">By reach</button>
     </div>
     <div class="chip-row" id="chain-row" style="margin-top: 10px;"></div>
-    <div id="rankings-content" style="margin-top: 18px;"></div>
+    <div class="data-stamp" id="data-stamp" style="margin-top: 14px;"></div>
+    <div id="rankings-content" style="margin-top: 18px;"><p class="loading-note">loading the circle…</p></div>
   </section>
 
   <footer class="brand-footer">
@@ -105,7 +108,14 @@
     let list = state.chain === 'all' ? [...ATHLETES] : ATHLETES.filter(a => a.chain === state.chain);
     list.sort(byReach ? (a, b) => followerCount(b.followers) - followerCount(a.followers) : rankSort);
     const rows = list.length
-      ? list.map((a, i) => statRow(a, i + 1, byReach)).join('')
+      ? list.map((a, i) => {
+          const row = statRow(a, i + 1, byReach);
+          // In rep view, drop a divider right before the first unscored caller.
+          if (!byReach && i > 0 && !a.scored && list[i - 1].scored) {
+            return '<div class="rank-divider">the rest of the circle</div>' + row;
+          }
+          return row;
+        }).join('')
       : '<p class="list-note">No members on this chain yet.</p>';
     document.getElementById('rankings-content').innerHTML = `
       <div class="list">
@@ -147,6 +157,10 @@
       if (!res.ok) throw new Error('hall-data.json fetch failed: ' + res.status);
       const data = await res.json();
       ATHLETES = data.athletes;
+      const stamp = document.getElementById('data-stamp');
+      if (stamp && data.meta && data.meta.lastRefreshLabel) {
+        stamp.textContent = 'circle data · ' + data.meta.lastRefreshLabel + ' · ' + (data.meta.lastRefresh || '');
+      }
       buildChainChips();
       wireChips('sort-row', 'sort');
       wireChips('chain-row', 'chain');

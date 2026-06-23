@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Hall of Fame — Altcoinist Inner Circle</title>
+<meta name="description" content="The sharpest callers in the Altcoinist Inner Circle, ranked by on-chain reputation. Reputation is the only flex." />
 
 <meta property="og:title" content="The Hall of Fame — Altcoinist Inner Circle" />
 <meta property="og:description" content="Reputation is the only flex. Ranked by rep, proven on-chain." />
@@ -29,6 +30,7 @@
       <a class="nav-link" href="/rankings">Rankings</a>
       <a class="nav-link" href="/calls">Calls</a>
       <a class="nav-link" href="/about">About</a>
+      <a class="nav-cta" href="https://groupbot.altcoinist.com/?utm_source=hall_of_fame&utm_medium=referral&utm_campaign=nav" target="_blank" rel="noopener">Join →</a>
     </div>
   </nav>
 
@@ -51,14 +53,17 @@
         <div class="value">105x</div>
       </div>
     </div>
+    <a class="hero-cta" href="https://groupbot.altcoinist.com/?utm_source=hall_of_fame&utm_medium=referral&utm_campaign=hero" target="_blank" rel="noopener">
+      Join the Circle <span aria-hidden="true">→</span>
+    </a>
   </section>
 
   <!-- 01 / The Spotlight — top 3 best of best -->
   <div class="section-divider">// the spotlight</div>
   <section>
     <h2 class="section-heading">Best of the best.</h2>
-    <p class="section-sub">The three highest rep scores in the circle.</p>
-    <div class="podium" id="podium"></div>
+    <p class="section-sub">The three highest rep scores in the circle. <span class="data-stamp" id="data-stamp"></span></p>
+    <div class="podium" id="podium"><p class="loading-note">loading the circle…</p></div>
   </section>
 
   <footer class="brand-footer">
@@ -126,6 +131,11 @@
       if (heroStats[0]) heroStats[0].textContent = data.meta.rosterSize;
       if (heroStats[1] && topRep != null) heroStats[1].textContent = topRep;
       if (heroStats[2] && biggestCall != null) heroStats[2].textContent = Math.round(biggestCall) + 'x';
+
+      const stamp = document.getElementById('data-stamp');
+      if (stamp && data.meta && data.meta.lastRefreshLabel) {
+        stamp.textContent = 'data as of ' + data.meta.lastRefreshLabel + ' · ' + (data.meta.lastRefresh || '');
+      }
 
       const tierColors = (data.meta && data.meta.tierColors) || {};
       const top3 = athletes.filter(a => a.scored).sort((a, b) => b.repScore - a.repScore).slice(0, 3);

@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>@thegardener777 · rep 70.7 · Altcoinist Inner Circle</title>
+<meta name="description" content="Ranked #5 in the Altcoinist Inner Circle. Rep 70.7, proven on-chain. Reputation is the only flex." />
 
 <meta property="og:title" content="@thegardener777 · rep 70.7 · Altcoinist Inner Circle" />
 <meta property="og:description" content="Ranked #5 in the Altcoinist Inner Circle. Rep 70.7, proven on-chain. Reputation is the only flex." />
@@ -29,10 +30,11 @@
       <a class="nav-link" href="/rankings">Rankings</a>
       <a class="nav-link" href="/calls">Calls</a>
       <a class="nav-link" href="/about">About</a>
+      <a class="nav-cta" href="https://groupbot.altcoinist.com/?utm_source=hall_of_fame&utm_medium=referral&utm_campaign=nav" target="_blank" rel="noopener">Join →</a>
     </div>
   </nav>
 
-  <main id="profile-root"></main>
+  <main id="profile-root"><p class="loading-note">loading…</p></main>
 
   <footer class="brand-footer">
     <div>// altcoinist · inner circle · exclusive</div>
@@ -92,6 +94,9 @@
     const profileUrl = location.origin + '/c/' + a.handle.replace('@', '');
     const tweetUrl = 'https://twitter.com/intent/tweet?text=' +
       encodeURIComponent(shareText(a, rank)) + '&url=' + encodeURIComponent(profileUrl);
+    // Pull CTA → mini app, tagged with the handle for attribution in PostHog.
+    const appUrl = 'https://groupbot.altcoinist.com/?utm_source=hall_of_fame&utm_medium=referral&utm_campaign=profile&utm_content=' +
+      a.handle.replace('@', '');
 
     const avatar = `
       <div class="p-avatar-wrap${a.scored ? ' verified' : ''}">
@@ -130,6 +135,10 @@
       <div class="share-row">
         <a class="share-btn" href="${tweetUrl}" target="_blank" rel="noopener">
           Share on X
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="cta-secondary" href="${appUrl}" target="_blank" rel="noopener">
+          Trade in the app
           <span aria-hidden="true">&rarr;</span>
         </a>
         <span class="share-note">reputation snapshot</span>

@@ -222,6 +222,7 @@ def member_html(template, m, rank, slug):
     html = re.sub(r"<title>.*?</title>", f"<title>{title}</title>", html, count=1)
     html = re.sub(r'(property="og:title" content=").*?(")', rf"\g<1>{title}\g<2>", html, count=1)
     html = re.sub(r'(property="og:description" content=").*?(")', rf"\g<1>{desc}\g<2>", html, count=1)
+    html = re.sub(r'(name="description" content=").*?(")', rf"\g<1>{desc}\g<2>", html, count=1)
 
     os.makedirs("c", exist_ok=True)
     with open(f"c/{slug}.html", "w", encoding="utf-8") as f:

@@ -15,7 +15,7 @@
   --text: #ffffff;
   --text-70: rgba(255, 255, 255, 0.70);
   --text-55: rgba(255, 255, 255, 0.55);
-  --text-30: rgba(255, 255, 255, 0.30);
+  --text-30: rgba(255, 255, 255, 0.40);  /* bumped 0.30 -> 0.40 for label legibility (a11y) */
   --brand: #39F590;
   --brand-80: rgba(57, 245, 144, 0.80);
   --brand-60: rgba(57, 245, 144, 0.60);
@@ -1369,3 +1369,66 @@ footer.brand-footer a:hover { color: var(--brand); }
   padding: 2px 6px;
   white-space: nowrap;
 }
+
+/* ============================================================
+   PULL CTAs (route into the mini app — the conversion path)
+   ============================================================ */
+/* persistent low-key nav button, on every page */
+.nav-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--bg); background: var(--brand);
+  border-radius: 999px; padding: 7px 15px;
+  text-decoration: none; white-space: nowrap;
+  transition: all 200ms;
+}
+.nav-cta:hover, .nav-cta:active { box-shadow: var(--glow-card); transform: translateY(-1px); }
+
+/* high-intent primary button (home hero) */
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 28px;
+  font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
+  color: var(--bg); background: var(--brand);
+  border: none; border-radius: 999px; padding: 13px 24px;
+  text-decoration: none; cursor: pointer;
+  transition: all 200ms;
+}
+.hero-cta:hover, .hero-cta:active { box-shadow: var(--glow-strong); transform: translateY(-1px); }
+
+/* secondary outline button (profile — sits beside Share on X) */
+.cta-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--brand); background: transparent;
+  border: 1px solid var(--brand-30); border-radius: 999px;
+  padding: 11px 20px; text-decoration: none;
+  transition: all 200ms;
+}
+.cta-secondary:hover, .cta-secondary:active { border-color: var(--brand); box-shadow: var(--glow-card); }
+
+/* ============================================================
+   DATA FRESHNESS STAMP + LOADING + RANK DIVIDER
+   ============================================================ */
+.data-stamp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-30);
+}
+
+.loading-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-30);
+  padding: 24px 0;
+}
+
+/* divider between scored callers and the rest of the circle (rankings, rep view) */
+.rank-divider {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-30);
+  padding: 24px 16px 8px 16px;
+}
+.rank-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
