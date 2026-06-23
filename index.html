@@ -146,6 +146,8 @@
         order.map((a, i) => a ? podiumCard(a, ranks[i], tierColors) : '').join('');
     } catch (e) {
       console.error('Hall data load failed:', e);
+      const p = document.getElementById('podium');
+      if (p) p.innerHTML = '<p class="loading-note">Circle data unavailable. Refresh in a moment.</p>';
     }
   })();
 </script>
